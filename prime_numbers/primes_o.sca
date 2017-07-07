@@ -1,0 +1,44 @@
+####################################
+## Prime Numbers
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+
+.mov _o1 p                      # p = 1
+candidate_loop:
+.inc p                          # p++
+.ifeq p MAXNUM end_label
+.mov _o1 q                      # q = 1
+next_div_loop:
+    .inc q                      # q++
+    .mov p x                    # x = p
+    .mov x tmp          
+    q tmp print_prime;          # if (x-q <= 0) print(p)
+    back_label:
+    dec_x_loop:
+        q x;                    # x -= q
+        _o0 x x_leq;            # if (x <= 0) goto x_leq;
+        .goto dec_x_loop
+        x_leq:
+            .ifeq x _o0 candidate_loop # if (x == 0) goto candidate_loop
+            .goto next_div_loop   
+    .goto dec_x_loop
+
+print_prime:
+    .out p
+.goto back_label
+
+end_label:
+.halt
+
+# Constants
+. MAXNUM:100
+. _o0:0
+# Variables
+. tmp:0
+. p:0 q:0 x:0
+
+.include "secure.lib"

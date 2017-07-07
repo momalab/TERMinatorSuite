@@ -1,0 +1,45 @@
+####################################
+## Number Occurrences
+## Array: 5, 7, 5, 2, 4, 5, 1, 2, 3, 3, 4, 6, 7, 8, 7, 6, 4, 3, 2, 2
+## Occur(2): 4
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+start:
+  .mov21 ptr i
+  .inc ptr
+  .dec db_size
+
+  .seq i input x
+  .add x occurrences
+
+.ifneq db_size _o0 start
+.out occurrences
+.outd occurrences
+.halt
+
+# variables
+. ptr:db_start
+. i:~0 x:~0 occurrences:~0
+. _o0:0 
+
+# the Fibonacci number to compute
+input:;.include datax "input.sec"
+
+# data
+db_start:
+.include datax "db.sec"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+# occurrences(array, Num):
+# int cnt = 0;
+# for (int i = 0 ; i < array.size() ; i++)
+#     if (array[i] == Num)
+#         ++cnt;
+# print cnt

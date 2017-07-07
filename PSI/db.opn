@@ -1,0 +1,8 @@
+. 1 1 1 2 3 999 999 999 999 999 2 2 2 1 1 1 1 1 1 1
+
+# Data In Form of:
+# size (this is in header.opn)
+# A[0] A[1] ... A[size-1]
+# B[0] B[1] ... B[size-1]
+#
+# if one array is smaller, will be padded with X's (999).

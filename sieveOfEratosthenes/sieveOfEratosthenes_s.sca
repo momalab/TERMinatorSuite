@@ -1,0 +1,87 @@
+####################################
+## Sieve Of Eratosthenes
+##########################################################################
+## result: 2 3 5 7 11 13 17 19 ...
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+# initialize the array to 1, 1, ..., 1
+.add num endNum
+.mov _o0 i
+init_loop:
+    .add _s0 _s1
+    .mov12 _s1 primeOuter
+    .inc primeOuter
+    .inc i
+.ifneq i endNum init_loop
+
+.mov _o2 p
+.mov p_ptr_bu primeOuter
+.add p primeOuter
+outer_loop:
+    .mov p i
+    .add p i
+    inner_loop:                         # Update all multiples of p
+        .mov p_ptr_bu primeInner        # prime[i] = 0;
+        .add i primeInner
+        .add _s0 _s0
+        .mov12 _s0 primeInner
+        .add p i
+    .mov i j
+    endNum j inner_loop;                # if (j < endNum) goto inner_loop;
+    .inc primeOuter
+    .inc p
+    .omul p p psqr
+endNum psqr outer_loop                      # if (psqr < endNum) goto outer_loop;
+
+# Print all primes from 2 to Num
+.mov _s2 pr_s
+.mov _o2 i
+.mov p_ptr_bu primeOuter
+.inc primeOuter
+.inc primeOuter
+print_loop:                         # for (i = 2 ; i < n ; i++)
+    .mov21 primeOuter x             #   print prime[i] * i  // this is either ~0 or ~prime
+    .smul pr_s x tmp                
+    .outd tmp # Print decrypted result
+    # .out tmp
+    .inc primeOuter
+    .inc i
+    .add _s1 pr_s
+.ifneq i endNum print_loop
+.halt
+
+# variables
+. endNum:1 num:100
+
+. primeOuter:prime
+. primeInner:prime
+. p_ptr_bu:prime
+
+. i:0 j:0 psqr:0 p:0
+. tmp:~0 pr_s:~0
+. x:~0 t:0
+. _o0:0 _s0:~0 _o2:2 _s2:~2
+
+
+.include "secure.lib"
+
+# This array should be at least num+2
+. prime:~[300]
+
+
+# void sieveOfEratosthenes(int n) {
+#     int prime[n+1];
+#     for (int i = 0 ; i < n+1 ; i++) 
+#         prime[i] = 1;
+#     for (int p = 2 ; p*p < n+1 ; p++)
+#         for (int i = 2*p ; i < n+1 ; i += p)    // Update all multiples of p
+#             prime[i] = 0;
+#     for (int p = 2 ; p < n+1 ; p++)             // Print all prime numbers
+#         printf("%d ", p * prime[p]);
+#     printf("\n");
+# }

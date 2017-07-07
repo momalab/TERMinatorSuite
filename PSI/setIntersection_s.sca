@@ -1,0 +1,140 @@
+####################################
+## Intersection between two sets
+##########################################################################
+## len(intersection) == len(set_1) == len(set_2)
+##
+## if the intersected values are less than len(intersection), 
+## the rest will be filled with X (e.g. 999), in order to
+## hide the length of the result .
+##########################################################################
+## set_1 = { 1 1 1 2 3 X X X X X }
+## set_2 = { 2 2 2 1 1 1 1 1 1 1 }
+## intersection = { 1 1 1 2 X X X X X X }
+##########################################################################
+## See ./db.opn for input format
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+
+.mov21 header_ptr size
+# set pointerB to point in the start of the second set
+.mov ptr set1
+.mov ptr set2
+.mov ozero i
+init_ptr_loop:
+    .inc set2
+    .inc i
+.ifneq i size init_ptr_loop
+# Now set1 points to the start of set A, and set2 to the start of set B.
+
+.mov set2 set2_bu
+.mov ozero i
+outer_loop:                 # for (int i = 0; i < size ; i++) {
+    .mov ozero j
+    .mov set2_bu set2
+    inner_loop:             #   for (int j = 0 ; j < size ; j++) {
+        .mov21 set1 x
+        .mov21 set2 y
+
+        .seq x y eq         #       int eq = (set1[i] == set2[j]) ? 1 : 0;
+
+        .smul x eq tmp
+        .add12 tmp res      #       res[i] += eq * set1[i];
+        .add12 eq ex_ptr    #       ex_ptr[i] += eq
+
+        .smul X eq tmp
+        .add12 tmp set2     #       set2[j] += eq * X;
+        .add12 tmp set1     #       set1[i] += eq * X;
+
+        .inc j
+        .inc set2
+    .ifneq j size inner_loop #  }
+    .inc i
+    .inc set1
+    .inc res
+    .inc ex_ptr
+.ifneq i size outer_loop    # }
+
+.mov res_bu res
+.mov ex_ptr_bu ex_ptr
+.mov ozero i
+compute_res_loop:           # for (int i = 0 ; i < size ; i++) 
+    .mov21 ex_ptr ex        #   ex = *exist;
+    .mov _s1 nex
+    ex nex;                 #   nex = 1 - ex
+    .mov21 res tmp          #   res = ex*(*res) + nex*X
+    .smul ex tmp r1
+    .smul nex X r2
+    .add r1 r2
+    .mov12 r2 res
+
+    .inc i
+    .inc res
+    .inc ex_ptr
+.ifneq i size compute_res_loop
+
+# Print the results
+.mov res_bu res
+.mov ozero i
+loop:
+    .mov21 res x
+    # .outd x # Print decrypted result
+    .out x
+    .inc res
+    .inc i
+.ifneq i size loop
+
+.halt
+
+# variables
+. header_ptr:header_start
+. ptr:db_start
+. res:result res_bu:result
+. ex_ptr:exist ex_ptr_bu:exist
+. set1:0 set2:0 set2_bu:0
+. i:0 j:0
+. size:0 x:~0 y:~0 tmp:~0 eq:~0
+. ex:~0 nex:~0 r1:~0 r2:~0
+
+. ozero:0 oone:1
+. X:~999
+
+# data
+header_start:
+.include "header.opn"
+header_end:
+header_size: (header_end - header_start)
+
+db_start:
+.include datax "db.sec"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+. result:~[200]
+. exist:~[200]
+
+
+# int* intersect(int set1[], int set2[], int size) {
+#     int *res = calloc(size, sizeof(int));
+#     int *exist = calloc(size, sizeof(int));
+
+#     for (int i = 0; i < size ; i++) {
+#         for (int j = 0 ; j < size ; j++) {
+#             int eq = (set1[i] == set2[j]) ? 1 : 0;
+#             res[i] += eq * set1[i];
+#             exist[i] += eq;
+#             set1[i] += eq * X;
+#             set2[j] += eq * X;
+#         }
+#     }
+#     for (int i = 0 ; i < size ; i++) {
+#         res[i] = (1-exist[i]) * X + exist[i] * res[i];
+#     }
+#     return res;
+# }

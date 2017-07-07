@@ -1,0 +1,90 @@
+####################################
+## Insertion sort ascending order
+## Array:  4  2  5  7  1  0  11  3  9  8  4  5  6  1  2  3  7  9  10  2
+## Output: 0  1  1  2  2  2  3  3  4  4  5  5  6  7  7  8  9  9  10  11 
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+
+.mov _o1 i                     # i = 1;
+outer_loop:
+    .mov i j                    #   j = i;
+    inner_loop:
+        .mov ptr_bu ptr
+        .add j ptr
+        .mov ptr ptr2
+        .dec ptr2               #        j--;
+# find min and max of ptr, ptr2 using G function
+        .mov21 ptr2 x           # int x = array[j-1];
+        .mov21 ptr y            # int y = array[j];
+        
+        .mov x x_y
+        .mov y y_x
+        y x_y;
+        x y_x;
+        # Compute |x-y|
+        ._G x_y x_y diff        
+        ._G y_x y_x diff_tmp
+        .add diff_tmp diff      # diff = gfun(x-y, x-y) + gfun(y-x, y-x);
+        # Compute max(x, y)
+        ._G x_y x max           
+        ._G y_x y max_tmp
+        .add max_tmp max        # max = gfun(x-y, x) + gfun(y-x, y);
+        .seq x y t
+        .smul t x max_tmp
+        .add max_tmp max        # max += (x == y) * x; // if x == y set max to x
+        # Compute min(x, y)
+        .mov max min
+        diff min;               # int min = max - diff;
+
+        .mov12 min ptr2
+        .mov12 max ptr
+        .dec j                  #       j--;
+    .ifneq j _o0 inner_loop   #   if (j != 0) goto inner_loop;
+    .inc i                      #   i++;
+.ifneq i len outer_loop         # if (i != n) goto outer_loop;
+
+.mov ptr_bu ptr
+.mov _o0 i
+loop:
+    .mov21 ptr x
+    # .outd x # Print decrypted result
+    .out x
+    .inc ptr
+    .inc i
+.ifneq i len loop
+
+.halt
+
+# array pointers
+. ptr:db_start ptr2:db_start ptr_bu:db_start
+
+# variables
+. i:0 j:0 t:~0
+. x:~0 x_y:~0 y:~0 y_x:~0 
+. max:~0 max_tmp:~0 min:~0 diff:~0 diff_tmp:~0 
+
+# constants
+. len:20
+. _o0:0
+
+db_start:
+.include datax "db.sec"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+
+# Insertion sort pseudocode
+# for (i = 1 ; i < n; i++) {
+#     j = i;
+#     while (j != 0) {
+#         minswp(&array[j-1], &array[j]);
+#         j--;
+#     }
+# }
+# print results

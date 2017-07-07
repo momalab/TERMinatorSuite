@@ -1,0 +1,130 @@
+####################################
+## Permutations
+##########################################################################
+## There is a list of numbers in db.sec.
+## Print all the permutations of that list.
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+
+.mov _o0 l
+.mov db_size size
+.mov size r
+.dec r
+recursion:
+.ifneq l r else_cond            # if (l == r) print array
+    .mov _o0 j
+    .mov arr_bu arr
+    print_array_loop:
+        # .outPtrVal arr
+        .mov21 arr tmp
+        # .outd tmp # Print decrypted result
+        .out tmp
+        .inc arr
+        .inc j
+    .ifneq j size print_array_loop
+    .mov arr_bu arr
+    .goto recursion_return      # return from recursion
+else_cond:  
+    .mov l i
+    permute_loop:
+        # swap(array + l, array + i);
+        .mov arr_bu arr
+        .mov arr ptr1
+        .add l ptr1
+        .mov arr ptr2
+        .add i ptr2
+        # swap pointer values    
+        .mov21 ptr1 x
+        .mov21 ptr2 y
+        .mov x t
+        .add _s0 t              # obfuscate the numbers
+        .mov y x
+        .add _s0 x              # obfuscate the numbers
+        .mov t y
+        .mov12 x ptr1
+        .mov12 y ptr2
+
+        # stack variables
+        .mov stack_bu stack
+        .add stack_ptr stack
+        .mov12 l stack          # stack[stack_ptr] = l;
+        .inc stack
+        .mov12 r stack          # stack[stack_ptr+1] = r;
+        .inc stack
+        .mov12 i stack          # stack[stack_ptr+2] = i;
+        .add _o3 stack_ptr      # stack_ptr += 3;
+        .mov stack_bu stack
+        
+        .inc l                  # l++;
+        .goto recursion;
+recursion_return:
+
+        # unstack variables
+        .mov stack_bu stack
+        .add stack_ptr stack
+        .dec stack
+        .mov21 stack i          # i = stack[stack_ptr-1];
+        .dec stack
+        .mov21 stack r          # r = stack[stack_ptr-2];
+        .dec stack
+        .mov21 stack l          # l = stack[stack_ptr-3];
+        _o3 stack_ptr;          # stack_ptr -= 3;
+
+        # swap(array + l, array + i); // swap back
+        .mov arr ptr1
+        .add l ptr1
+        .mov arr ptr2
+        .add i ptr2
+        .mov21 ptr1 x
+        .mov21 ptr2 y
+        .mov x t
+        .mov y x
+        .mov t y
+        .mov12 x ptr1
+        .mov12 y ptr2
+        .inc i                  # i++;
+        .mov r r_succ
+        .inc r_succ
+    .ifneq i r_succ permute_loop
+    .ifneq stack_ptr _o0 recursion_return
+
+.halt
+
+# variables
+. arr:db_start arr_bu:db_start
+. stack:stack_area stack_bu:stack_area
+. stack_ptr:0 size:0
+
+. i:0 j:0 l:0 r:0 r_succ:0
+. x:~0 y:~0 t:~0 tmp:0
+. ptr1:0 ptr2:0
+
+. _o0:0 _o3:3
+
+
+# data
+db_start:
+.include datax "db.sec"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+. stack_area:[256]
+
+
+# void permute(int *array, int size, int l, int r) {
+#     if (l == r) {
+#         printArray(array, size);
+#     } else {
+#         for (int i = l; i <= r; i++) {
+#             swap((array+l), (array+i)); // swap
+#             permute(array, size, l+1, r);
+#             swap((array+l), (array+i)); // restore the swap
+#         }
+#     }
+# }

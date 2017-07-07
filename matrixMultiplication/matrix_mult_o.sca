@@ -1,0 +1,126 @@
+####################################
+## Matrix Multiplication
+##########################################################################
+## See ./db.opn for input format
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+.mov21 header_ptr r1
+.inc header_ptr
+.dec header_size
+.mov21 header_ptr c1
+.inc header_ptr
+.dec header_size
+.mov21 header_ptr r2
+.inc header_ptr
+.dec header_size
+.mov21 header_ptr c2
+.inc header_ptr
+.dec header_size
+
+.mov ptr ptrA
+.mov ptr ptrB
+.mov ozero i
+l1:
+    .mov ozero j
+    l2:
+        .inc ptrB
+        .inc j
+    .ifneq j c1 l2
+    .inc i
+.ifneq i r1 l1
+# Now ptrA points to the start of array A, and ptrB to the start of array B.
+
+.mov ptrA ptrAbu
+.mov ptrB ptrBbu
+.mov res resBu
+.mov ozero i
+outer:
+    .mov ozero j
+    middle:
+        .mov ozero k
+        inner:
+            # A[i*c1 + k]
+            .mov21 ptrA x
+            # B[k*c2 + j]
+            .mov21 ptrB y
+            # xy = A[i*c1 + k] * B[k*c2 + j]
+            .omul x y xy
+            # res[i*c2 + j] += xy
+            .add12 xy res
+
+            .inc ptrA
+            .add c2 ptrB
+            .inc k
+        .ifneq k c1 inner
+        .inc j
+        # ptrA -= k
+        .sub k ptrA
+        .mov ptrBbu ptrB
+        .add j ptrB
+        .inc res
+    .ifneq j c2 middle
+    .inc i
+    .add c1 ptrA
+    .mov ptrBbu ptrB
+    # res += c2 - j;
+    .add c2 res
+    .sub j res
+.ifneq i r1 outer
+
+# Print the results
+.mov resBu res
+.mov ozero i
+.omul r1 c2 iterations
+loop:
+    .mov21 res xy
+    .out xy
+    .inc res
+    .inc i
+.ifneq i iterations loop
+
+.halt
+
+# variables
+. ptr:db_start
+. header_ptr:header_start
+. res:result
+. resBu:result
+. r1:0 r2:0 c1:0 c2:0 
+. i:0 j:0 k:0 iterations:0
+. ptrA:0 ptrAbu:0 ptrB:0 ptrBbu:0
+. x:0 y:0 xy:0 tmp:0
+. ozero:0
+
+# data
+header_start:
+.include "header.opn"
+header_end:
+header_size: (header_end - header_start)
+
+db_start:
+.include "db.opn" # 2 3 3 4   1 2 3  4 5 6   1 2 3 4  4 4 3 2  9 7 6 4
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+. result:[30]
+
+
+# int r1, c1, r2, c2, i, j, k;
+# int a[r1][c1], b[r2][c2], mult[r1][c2];
+# for(i = 0; i < r1; ++i)
+#     for(j = 0; j < c2; ++j)
+#         mult[i][j]=0;
+# for(i = 0; i < r1; ++i)
+#     for(j = 0; j < c2; ++j)
+#         for(k = 0; k < c1; ++k)
+#             mult[i][j] += a[i][k] * b[k][j];
+# for(i = 0; i < r1; ++i)
+#     for(j = 0; j < c2; ++j)
+#         print mult[i][j]

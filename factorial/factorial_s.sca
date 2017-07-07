@@ -1,0 +1,46 @@
+####################################
+## Factorial(N)
+# 1 1 2 6 24 120 720 5040 40320 362880 3628800 39916800 479001600
+##########################################################################
+## Compute the factorial of the input number (num).
+##########################################################################
+## Iterate up to a maximum number (to avoid side channel attacks)
+## and keep the result of the requested number.
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+.mov _s1 fact                       # fact = ~1
+.mov _o0 iter                       # iter = 0
+.mov _s0 i                          # i = ~0
+fact_loop:
+    .add _o1 iter                   # iter++
+    .add _s1 i                      # i++
+    .smul fact i fact               # fact *= i
+    .seq i input x
+    .smul x fact y
+    .add y result                   # result += x * fact // either fact(N) or 0
+.ifneq iter maxnum fact_loop      # while dbsize--
+.out result
+.outd result
+.halt
+
+. maxnum:50 # the maximum factorial the program can compute
+. _o0:0
+# variables
+. iter:0
+. i:~0 fact:~1
+. x:~0 y:~0 result:~0
+
+# the factorial number to compute
+input:;.include datax "input.sec"
+
+.include "secure.lib"
+
+# factorial(n):
+# fact = 1
+# for (i = 2; i <= n; i ++):
+#   fact *= i;
+# print fact
