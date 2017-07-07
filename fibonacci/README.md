@@ -6,7 +6,7 @@
 ##### Idea: 
 The program can compute the Fibonacci up to a maximum number. The idea is to iterate all the numbers in range [0, max_num] in order to avoid side channel attacks and compute the Fibonacci number for each one. Keep only the result of the requested number and print it in the end.
 
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/fibonacci/fibonacci_s.sca):
-Compute the Fibonacci of the number given in [input.sec](https://github.com/momalab/privacy_benchmarks/fibonacci/input.sec) (which is 12).
+[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/fibonacci_s.sca):
+Compute the Fibonacci of the number given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (which is 12).
 
 ![alt text](./../charts/fibonacci.png)

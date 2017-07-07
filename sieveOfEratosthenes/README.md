@@ -8,6 +8,6 @@ Given an open number ```e.g. Num = 20```, we will find every prime from 2 to Num
 
 **Result:** We want to protect both the number of primes found and the primes themselves. The only way to do this, is by returning the encryption of a number if it is prime, else the encryption of zero.
 
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/sieveOfEratosthenes/sieveOfEratosthenes_s.sca)
+[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/sieveOfEratosthenes_s.sca)
 
 ![alt text](./../charts/primes.png)
