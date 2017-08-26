@@ -9,4 +9,4 @@ The program can compute the factorial up to a maximum number. The idea is to ite
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/factorial_s.sca):
 Compute the factorial of the number given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/input.sec) (which is 5).
 
-![alt text](./../charts/factorial.png)
+![alt text](./../graphs/factorial.png)

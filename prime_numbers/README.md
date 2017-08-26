@@ -18,4 +18,4 @@ void sieveOfEratosthenes(int *prime, int base) {
 }
 ```
 
-![alt text](./../charts/primes.png)
+![alt text](./../graphs/primes.png)

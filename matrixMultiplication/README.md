@@ -27,4 +27,4 @@ AxB:
 
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/matrix_mult_s.sca) [db.sec](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/db.sec)
 
-![alt text](./../charts/mmult.png)
+![alt text](./../graphs/mmult.png)

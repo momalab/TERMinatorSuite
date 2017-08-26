@@ -34,4 +34,4 @@ def insertionSort(array) {
 }
 ```
 
-![alt text](./../charts/isort.png)
+![alt text](./../graphs/isort.png)

@@ -10,4 +10,4 @@ Given an open number ```e.g. Num = 20```, we will find every prime from 2 to Num
 
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/sieveOfEratosthenes_s.sca)
 
-![alt text](./../charts/primes.png)
+![alt text](./../graphs/primes.png)

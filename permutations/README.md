@@ -11,4 +11,4 @@ The notion of permutation relates to the act of arranging all the members of a s
 
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/permutations/permutations_s.sca)
 
-![alt text](./../charts/perm.png)
+![alt text](./../graphs/perm.png)

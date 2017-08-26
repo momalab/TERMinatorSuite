@@ -9,4 +9,4 @@ The program can compute the Fibonacci up to a maximum number. The idea is to ite
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/fibonacci_s.sca):
 Compute the Fibonacci of the number given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (which is 12).
 
-![alt text](./../charts/fibonacci.png)
+![alt text](./../graphs/fibonacci.png)

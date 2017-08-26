@@ -63,4 +63,4 @@ int main(void) {
 }
 ```
 
-![alt text](./../charts/tak.png)
+![alt text](./../graphs/tak.png)

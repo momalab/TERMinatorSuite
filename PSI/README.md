@@ -9,4 +9,4 @@ Given two sets (we also support [multisets](https://en.wikipedia.org/wiki/Multis
 
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/setIntersection_s.sca), [db.sec](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/db.sec)
 
-![alt text](./../charts/psi.png)
+![alt text](./../graphs/psi.png)

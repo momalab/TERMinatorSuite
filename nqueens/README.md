@@ -49,4 +49,4 @@ _ _ Q _     _ Q _ _
 
 ```
 
-![alt text](./../charts/nqueens.png)
+![alt text](./../graphs/nqueens.png)
