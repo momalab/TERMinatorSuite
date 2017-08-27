@@ -45,7 +45,7 @@ def tak_unrolled(x, y, z, iter) {
 }
 ```
 
-**Important:** The preogrammer is responsible to setting a correct initial value for the ```iter``` parameter. It can be shown that if ```x```, ```y``` and ```z``` are in the same range ```[0, MAX_NUM]```, the minimum value the iterations for correct results is ```MAX_NUM-1```.
+**Important:** The programmer is responsible to set a correct initial value for the ```iter``` parameter. It can be shown that if ```x```, ```y``` and ```z``` are in the same range ```[0, MAX_NUM]```, the minimum value the iterations for correct results is ```MAX_NUM-1```.
 For example:
 ```
 #define MAX_NUM 3
@@ -63,4 +63,8 @@ int main(void) {
 }
 ```
 
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_s.sca` denotes a privacy-preserving program. The Cryptoleq architecture supports branching oracles, such as function G, and `CEAL` can invoke this function natively using `._G`. For architectures that do not support branching oracles natively, the `.c` source code simulates this functionality by defining `int gfun(int, int)`.**
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/tak.png)

@@ -15,9 +15,14 @@ Output:
 ##### Implementation: 
 The algorithm computes the Fibonacci sequence up to a given maximum number (`max_num`), by iterating over all numbers in range `[0, max_num]`. This protects the input `n` against timing side-channels, since the execution time of Fibonacci is linear to that input. For that matter, the privacy-preserving version computes all Fibonacci numbers up to `max_num` and return only the result corresponfing to input `n`.
 
+
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.sec` denotes an encrypted input database file.**
+
 CEAL Example
 ------------
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/fibonacci_s.sca):
 Computes the Fibonacci of the number based on the input given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (in this case the output is `12`).
 
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/fibonacci.png)

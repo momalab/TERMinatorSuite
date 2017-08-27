@@ -5,4 +5,8 @@ This benchmark prints all prime numbers less than a maximum integer using the Si
 
 **Encrypted Values:** All output values (primes or zeros) are encrypted. The cardinality of the set of primes is not disclosed. The latter is possible by either return the encrypted prime or the encryption of zero in the output set.
 
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program.**
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/primes.png)

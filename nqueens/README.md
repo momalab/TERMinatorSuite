@@ -49,4 +49,8 @@ _ _ Q _     _ Q _ _
 
 ```
 
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_s.sca` denotes a privacy-preserving program. The program `decode.py` is used to reverse the encoding presented above. The Cryptoleq architecture supports branching oracles, such as function G, and `CEAL` can invoke this function natively using `._G`. For architectures that do not support branching oracles natively, the `.c` source code simulates this functionality by defining `int gfun(int, int)`.**
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/nqueens.png)

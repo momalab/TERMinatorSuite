@@ -13,8 +13,14 @@ Output Sequence for `n = {0, 1, 2, 3, 4, ...}`:
 ##### Implementation:
 The algorithm computes the factorial up to a maximum number `max_num`, by iterating over all numbers in range `[0, max_num]`, and computes the factorial of each one. This is necessay to make the algorithm resilient to timing side-channels and protect the privacy of input value `n`. The algorithm finally selects and prints the correct output based on `n`.
 
-CEAL Example:
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.sec` denotes an encrypted input database file.**
+
+CEAL Example
+------------
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/factorial_s.sca):
 Computes the factorial of the input number `n` given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/input.sec) (in this case the input is 5).
 
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/factorial.png)

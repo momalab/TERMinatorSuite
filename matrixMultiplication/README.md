@@ -26,4 +26,8 @@ AxB=
 
 **Result:** The output matrix has dimensions ```row1 * col2``` (assuming `col1 = row2`). The dimisions of the output are not encrypted.
 
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.opn` denotes an unencrypted input database file, while `.sec` denotes an encrypted input database file.**
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/mmult.png)

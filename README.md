@@ -20,16 +20,16 @@ Step 3: copy all the benchmark files inside the cryptoleq directory:
 ### How to run a benchmark
 Step 1: ensure that all benchmarks are inside the ```cryptoleq/scr/ceal/tests/``` directory. 
 
-Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) and execute the following command 
+Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) and execute the following command:
 
-```../../_bin_unx/ceal factorial_s.sca```.
+```../../_bin_unx/ceal factorial_s.sca```
 
 **Warning:** It is important to run each benchmark within its directory (as in the previous example), and not from the ```tests``` directory, since the ```ceal``` executable includes the ```lib``` folder from the parent directory.
 
 
 ### TERMinator Suite Benchmarks
 
-**All benchmarks are available as `C/C++` and `CEAL` sources. `CEAL` provides native support for a branching oracle (function G).** 
+**All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).** 
 
 - __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
     * The 8-queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The N-Queens problem is the problem of placing N queens on an NxN chessboard.
@@ -91,7 +91,7 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ We protect the privacy of both the test value, as well as all elements in the input set using encryption.
 
 
-### Security Parameter (lambda) & Public Key (PQ)
+### `CEAL` Security Parameter (lambda) & Public Key (PQ)
 The security parameter (lambda) represents the bit size of the public encryption key (PQ) of the Paillier cryptosystem. The public key is the product of two prime numbers (`P` and `Q`), and each such prime has a bitsize between  64 and 512 bits. As the security parameter size increases, the overall  performance of a benchmark is expected to decrease.
 
 It is possible to change the security parameter of a benchmark by updating the ```.pragma PQ=``` directive at the beginning of a `CEAL` benchmark (```.sca``` file) with two prime numbers separated by a dot (`.`). The following are of public keys ranging from 16 to 1024 bits.

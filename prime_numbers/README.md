@@ -18,4 +18,8 @@ void sieveOfEratosthenes(int *prime, int base) {
 }
 ```
 
+**The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program.**
+
+CEAL Benchmark Evaluation
+-------------------------
 ![alt text](./../graphs/primes.png)
