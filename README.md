@@ -1,98 +1,100 @@
 ## Benchmarks for Privacy Preserving Architectures
 
-### Configuration
-First clone and set up the cryptoleq [repository](https://github.com/momalab/cryptoleq), as shown [here](https://github.com/momalab/cryptoleq/blob/master/doc/build_ceal.pdf):
+### Installation steps
+Step 1: clone and set up the cryptoleq [repository](https://github.com/momalab/cryptoleq), as shown [here](https://github.com/momalab/cryptoleq/blob/master/doc/build_ceal.pdf):
 
 ```git clone https://github.com/momalab/cryptoleq.git```
 
 
-Second clone the benchmarks repository:
+Step 2: clone the benchmarks repository:
 
 ```git clone https://github.com/momalab/privacy_benchmarks.git```
 
 
-Finally, copy all the benchmark files inside the cryptoleq directory:
+Step 3: copy all the benchmark files inside the cryptoleq directory:
 
 ```cp -rf ./privacy-benchmarks/* ./cryptoleq/scr/ceal/tests/```
 
 
 
-### Running a benchmark
-Now all the benchmarks are inside the ```cryptoleq/scr/ceal/tests/``` directory. ```cd``` to the benchmark you want to run (e.g. ```cd ./factorial```) and execute the following command ```../../_bin_unx/ceal factorial_s.sca```.
+### How to run a benchmark
+Step 1: ensure that all benchmarks are inside the ```cryptoleq/scr/ceal/tests/``` directory. 
 
-**Warning:** It is important that you run each benchmark through its directory (as the example above), and not from the tests directory because the ```ceal``` executable searches for the ```lib``` folder in the parent directory.
+Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) and execute the following command 
+
+```../../_bin_unx/ceal factorial_s.sca```.
+
+**Warning:** It is important to run each benchmark within its directory (as in the previous example), and not from the ```tests``` directory, since the ```ceal``` executable includes the ```lib``` folder from the parent directory.
 
 
-### Benchmarks
+### TERMinator Suite Benchmarks
 
-- __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/nqueens)__ [wiki](https://en.wikipedia.org/wiki/Eight_queens_puzzle)
+**All benchmarks are available as `C/C++` and `CEAL` sources. `CEAL` provides native support for a branching oracle (function G).** 
+
+- __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
     * The 8-queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The N-Queens problem is the problem of placing N queens on an NxN chessboard.
-    * __Threat Model:__  In this benchmark, we solely protect the output data (e.g. the queens positions), as the only input data is the number of the queens, which we define as open--value.
+    * __Threat Model:__ In this benchmark, the final solution needs to remain private, so all queen positions and intermediate values are encrypted. The only input is the number of the queens, which is defined as an open value.
 
 
-- __[Tak function](https://github.com/momalab/privacy_benchmarks/tree/master/tak_function)__ [wiki](https://en.wikipedia.org/wiki/Tak_(function))
-    * In computer science, the Tak function is a recursive function, named after Ikuo Takeuchi. Tak function is a popular recursion performance test.
-    * __Threat Model:__ Every variable is encrypted.
+- __[Tak function](https://github.com/momalab/privacy_benchmarks/tree/master/tak_function)__ [(link)](http://www.users.miamioh.edu/ishiut/papers/tarai_ipl.pdf)
+    * The Tak function is a synthetic benchmark, often used to demonstrate recursion performance (named after Ikuo Takeuchi). It uses variables x, y and z as inputs, and unless x <= y, each invocation spawns three recursive calls, where each variable is reduced by one.
+    * __Threat Model:__ Variables x, y and z are encrypted to preserve their privacy.
 
 
-- __[Insertion-sort](https://github.com/momalab/privacy_benchmarks/tree/master/insertionSort)__ [wiki](https://en.wikipedia.org/wiki/Insertion_sort)
-    * Insertion sort is a simple sorting algorithm that builds the final sorted array (or list) one item at a time. 
+- __[Insertion-sort](https://github.com/momalab/privacy_benchmarks/tree/master/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
+    * The insertion sort algorithm enables in-place sorting of an input array, by left-shifting each array element to its correct (sorted) position. The algorithm iterates over all array elements and compares the j-th element with its previous one; if the higher-index element is larger, the algorithm swaps the two elements. 
     * Performance:
         - Worst-case: О(n^2)
         - Average: О(n^2)
         - Best-case: O(n)
-    * __Threat Model:__ In this benchmark, we do not care to protect the size of the array, only the contents of both the input/unsorted and output/sorted arrays.
+    * __Threat Model:__ In this benchmark, all elements of the input array are encrypted to protect their privacy. The size of the array is not encrypted.
 
 
-- __[Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/master/PSI)__ [PSI](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
-    * Protocols for private set intersection PSI allow two parties holding sets S and S' to compute the intersection I = S ∩ S' without revealing to the other party any additional information about their respective sets (except their sizes).
-    * __Threat Model:__ In this benchmark, we care to protect the contents of the sets. We do not care to protect the size (N) of the biggest set which is given as open value; the smaller array is extended also in size N and filled up with a fixed value.
+- __[Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/master/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
+    * Private set intersection allows two parties, holding sets A and B respectively, to compute all elements common to both A and B, without revealing any information about the non-common ellements in the sets.
+    * __Threat Model:__ In this benchmark, all input and output set elements are encrypted to preserve their privacy. The size of sets A and B is not encrypted. If one set is smaller, it is extended with copies of a null ciphertext (`epsilon`).
 
 
-- __[Fibonacci](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci)__ [wiki](https://en.wikipedia.org/wiki/Fibonacci_number)
-    * The Fibonacci numbers are the numbers in a sequence that is characterized by the fact that every number after the first two is the sum of the two preceding ones.
-    * __Threat Model:__ The input number is given encrypted, while we have modified the algorithm in a way to protect the input from information leaked from the computation time.
-    * The only arrangement is that the program can compute up to a maximum/fixed number (N). When the user asks for the fib(X), 0 <= x <= N, the program computes every fib in range [0, N] and prints the fib(X). This arrangement was made in order to protect the data from side channel attacks, like leaking information about X from the computation time.
+- __[Fibonacci](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci)__ [(link)](http://mathworld.wolfram.com/FibonacciNumber.html)
+    * The Fibonacci numbers form an integer sequence, where the first two integers (`F[1]` and `F[2]`)in the sequence are equal to `1`, and every other integer equals the sum of the two previous integers in the sequence: `F[n] = F[n-1] + F[n-2]`.
+    * __Threat Model:__ The input integer `x` is encrypted to protect its privacy. This benchmark protects the input against information leakage from side channels.
+    * This benchamark can compute up to a maximum input `N`. When the user input is `x`, for 0 <= x <= N, the program computes the corresponding Fibonacci output for every input in range [0, N] and obliviously selects `F[x]`. This is necessary to protect input `x` from side channel leakage, as the computation time of the algorithm is proportional to the user input `x`.
 
 
-- __[Factorial](https://github.com/momalab/privacy_benchmarks/tree/master/factorial)__ [wiki](https://en.wikipedia.org/wiki/Factorial)
-    * The factorial of a non-negative integer n, denoted by n!, is the product of all positive integers less than or equal to n.
-    * __Threat Model:__ Same as Fibonacci.
+- __[Factorial](https://github.com/momalab/privacy_benchmarks/tree/master/factorial)__ [(link)](http://mathworld.wolfram.com/Factorial.html)
+    * The factorial `n!` of a positive integer `n` is the product of all positive integers less than or equal to `n`. We also define `0!=1`.
+    * __Threat Model:__ Similar to Fibonacci, the input integer `n` is encrypted to protect its privacy. This benchmark also protects against side channels.
     
 
-- __[Matrix Multiplication](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication)__ [wiki](https://en.wikipedia.org/wiki/Matrix_multiplication)
-    * Matrix multiplication is a binary operation that produces a matrix from two matrices. If A is an ```n × m``` matrix and B is an ```m × p``` matrix, their matrix product AB is an ```n × p``` matrix, in which the m entries across a row of A are multiplied with the m entries down a columns of B and summed to produce an entry of AB.
-    * __Threat Model:__ In this benchmark, we are protecting the contents of the matrices, we do not care to protect the dimensions (```n m m p```) which are given as open values.
-    * The matrix product is a ```n × p``` matrix with encrypted values.
+- __[Matrix Multiplication](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication)__ [(link)](http://mathworld.wolfram.com/MatrixMultiplication.html)
+    * Matrix multiplication computes a new matrix that is the product of two input matrices A and B. If A is an ```n × m``` matrix and B is an ```m × p``` matrix, the product matrix C=AB is an ```n × p``` matrix, where `m` entries across a row of A are multiplied with the `m` entries down a column of B and accumulated to an element of C.
+    * __Threat Model:__ In this benchmark, the contents of both input matrices, as well as the contents of the product matrix, are encrypted. The dimensions (```n m``` and ```m p```) are not encrypted.
 
 
-- __[Permutations](https://github.com/momalab/privacy_benchmarks/tree/master/permutations)__ [wiki](https://en.wikipedia.org/wiki/Permutation)
-    * The notion of permutation relates to the act of arranging all the members of a set into some sequence or order, or if the set is already ordered, rearranging its elements, a process called permuting. This benchmark, computes all permutations of a given array/set.
-    * __Threat Model:__ In this benchmark, we do not care to protect the size of the array. We are protecting the contents of the input, as well as all the output/permuted arrays.
+- __[Permutations](https://github.com/momalab/privacy_benchmarks/tree/master/permutations)__ [(link)](http://mathworld.wolfram.com/Permutation.html)
+    * This benchamark computes all possible permutations of the input set. A permutation is new potential arrangement in the order of a set. The total number of permutations in a set of `n` elements is the factorial `n!`.
+    * __Threat Model:__ In this benchmark, we use encryption to protect the privacy of all elements in the input set, as well as all output sets (permutations). The cardinality of the input set is not protected.
 
 
-- __[Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes)__ [wiki](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
-    * In mathematics, the sieve of Eratosthenes, is a simple, ancient algorithm for finding all prime numbers up to any given limit. It does so by iteratively marking as composite (i.e. not prime) the multiples of each prime, starting with the multiples of 2. In this benchmark, we print all prime numbers up to a fixed/maximum number using the sieve of Eratosthenes method.
-    * __Threat Model:__ In this benchmark, the only open value will be the maximum number to compute if it is prime. In order to protect both the primes themselves and the number of primes found from 2 to Num, if a number is prime we print the encryption of that prime, else we print the encryption of zero.
+- __[Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes)__ [(link)](http://mathworld.wolfram.com/SieveofEratosthenes.html)
+    * This benchmark implements an algorithm for finding all prime numbers less than a maximum value. The benchmark iterates over all integers and marks as `composite` (i.e., not prime) all multiples of each prime, starting with the multiples of 2 (the first prime). This benchmark prints all prime numbers up to the input integer `n`.
+    * __Threat Model:__ In this benchmark, we protect the privacy of all computed primes using encryption. In addition, this benchmark protects the cardinality of the output set, by also returning the encryption of zero for composites. The input integer `n` that determines the maximum prime is not encrypted.
 
 
-- __[Prime Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/prime_numbers)__ [wiki](https://en.wikipedia.org/wiki/Prime_number)
-    * A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. In this benchmark, we find and print all prime numbers from 2 to a fixed/maximum number N. In this benchmark, we use the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes) in rounds in order to calculate prime numbers without stopping.
-    * __Threat Model:__  Same as in the Sieve of Eratosthenes benchmark. 
+- __[Prime Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/prime_numbers)__ [(link)](http://mathworld.wolfram.com/PrimeNumber.html)
+    * This benchmark uses the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes) algorithm to run indefinitely and generate each prime number in sequence.
+    * __Threat Model:__  Similar to the Sieve of Eratosthenes, we protect the privacy of all computed primes. 
 
 
 - __[Number Occurrences](https://github.com/momalab/privacy_benchmarks/tree/master/numOccurrences)__
-    * Given an array of integers count the occurrences of a specific number.
-    * __Threat Model:__ The input number as well as the array of integers are given encrypted. No information leaked.
+    * This benchmark receives a set of integers and computes the frequency that a specific test value occurs in the set.
+    * __Threat Model:__ We protect the privacy of both the test value, as well as all elements in the input set using encryption.
 
 
-*Source: Wikipedia*
+### Security Parameter (lambda) & Public Key (PQ)
+The security parameter (lambda) represents the bit size of the public encryption key (PQ) of the Paillier cryptosystem. The public key is the product of two prime numbers (`P` and `Q`), and each such prime has a bitsize between  64 and 512 bits. As the security parameter size increases, the overall  performance of a benchmark is expected to decrease.
 
-
-### Security Parameter (N)
-The security parameter (\texttt{N}) is a prime number that ranges from 64 to 1024 bits; the latter is the minimum standard not yet broken size. As the bits of the security parameter increase, the function \texttt{G} becomes slower.
-
-To change the security parameter of a benchmark you should modify the ```.pragma PQ``` line which is at the start of the each benchmark ```.sca``` file. Below are some examples that range from 16 to 1024 bits.
+It is possible to change the security parameter of a benchmark by updating the ```.pragma PQ=``` directive at the beginning of a `CEAL` benchmark (```.sca``` file) with two prime numbers separated by a dot (`.`). The following are of public keys ranging from 16 to 1024 bits.
 
 ```
 .pragma PQ=239.251

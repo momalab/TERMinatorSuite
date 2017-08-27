@@ -1,12 +1,10 @@
 ### Set Intersection
-Given two sets (we also support [multisets](https://en.wikipedia.org/wiki/Multiset)) of integers ```e.g. 1 1 1 2 3 X X X X X``` and ``` 2 2 2 1 1 1 1 1 1 1``` store and print the intersection of those two sets ```1  1  1  2  X  X  X  X  X  X```.
+Given two input sets, the algorithm computes and prints all elements common in both sets. The algorith also supports [multisets](https://projecteuclid.org/download/pdf_1/euclid.ndjfl/1093634995); for example, for inputs ```1 1 1 2 3 ε ε ε ε ε``` and ``` 2 2 2 1 1 1 1 1 1 1``` the intersection is ```1  1  1  2  ε  ε  ε  ε  ε  ε```.
 
-**Open values:** The sets size (given in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/header.opn)). If the sizes of the two sets are not equal, pad the smaller one with a constant value X (```e.g. 999```).
+**Open values:** The size of the input sets (defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/header.opn)). In case the sizes of the set do not match, the smaller set is padded with a null ciphertext `ε` (epsilon).
 
-**Encrypted Values:** The content of the sets.
+**Encrypted Values:** All elements in each set.
 
-**Result:** We want to protect both the contents and the size of the intersection. The only way to do this, is by returning a fixed size set. As already mentioned, the two sets' lengths must be equal. At start, the set will be initialized with encrypted zeros. In the end, some positions will have the encrypted numbers that were in both sets, and the others will have encrypted X's.
-
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/setIntersection_s.sca), [db.sec](https://github.com/momalab/privacy_benchmarks/tree/master/PSI/db.sec)
+**Result:** This benchmark protects both the contents and the size of the intersection, so the length of the output set is fixed (i.e., it does not depend on the elements of the input sets). Assuing that the two input sets have equal lenght (otherwise we use padding on the shorter set), the intersection output is initialized with encrypted zeros to match the length of the inputs. The final encrypted output contains either elements common in both input sets or null ciphertexts `ε` to pad its size.
 
 ![alt text](./../graphs/psi.png)

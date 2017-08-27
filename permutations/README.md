@@ -1,14 +1,13 @@
 ### Permutations
-The notion of permutation relates to the act of arranging all the members of a set into some sequence or order, or if the set is already ordered, rearranging its elements, a process called permuting. This benchmark, computes and prints all permutations of a given array/set.
+This benchmark computes and prints all permutations of a given array/set.
 
-**Open value:** We cannot protect the size of the input/given array.
+**Unencrypted value:** The size of the input array is not encrypted..
 
-**Encrypted Values:** We are protecting the contents of the input, as well as all the output/permuted arrays.
+**Encrypted values:** All elements in the input array and in all permuted output arrays are encrypted.
 
-**Result:** All possible permutations of the input array.
+**Result:** A set of all possible permutations of the input array.
 
-**Recursion:** Cryptoleq does not have "native" recursion; but it can provide a large amount of memory to simulate recursion. In order to do so, before every recursive call (```goto to the beginning```) we must store all local variables into a stack, and respectively after returning from a recursive call we must unstack the stored local variables.
+**Recursion:** The CEAL language does not provide native support for recursion, but it is possible to simulate recursion by creating a stack construct in memory. For that matter, before a recursive call (i.e., ```goto to the beginning```), the CEAL program pushes all local variables in the stack. Likewise, as soon as control returns from a recursive call, the program pops all variables stored earlier.
 
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/permutations/permutations_s.sca)
 
 ![alt text](./../graphs/perm.png)

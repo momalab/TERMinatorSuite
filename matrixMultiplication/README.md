@@ -1,30 +1,29 @@
 ### Matrices Multiplication
-Given two arrays of integers e.g.
+
+Given two integer matrices as input, for example:
 ```
-A:
+A=
 1 2 3
 4 5 6
 ```
 and
 ```
-B:
+B=
 1 2 3 4
 4 4 3 2 
 9 7 6 4
 ```
-multiply and store those two arrays 
+compute the product AB of the inputs and return the result: 
 ```
-AxB:
+AxB=
 36 31 27 20
 78 70 63 50
 ```
 
-**Open values:** The array sizes (```e.g. r1 c1 r2 c2```, given in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/header.opn)).
+**Open values:** The matrix dimensions (i.e., ```row1 col1 row2 col2```, which is defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/header.opn)).
 
-**Encrypted Values:** The contents of the two matrices.
+**Encrypted Values:** The contents of both input matrices, and the output matrix.
 
-**Result:** The only thing we want to protect is the contents of the arrays. (We do not want to protect the size of the result, it would be ```r1 * c2``` which are open values.)
-
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/matrix_mult_s.sca) [db.sec](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/db.sec)
+**Result:** The output matrix has dimensions ```row1 * col2``` (assuming `col1 = row2`). The dimisions of the output are not encrypted.
 
 ![alt text](./../graphs/mmult.png)

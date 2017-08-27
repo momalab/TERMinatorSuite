@@ -1,12 +1,23 @@
 ### Fibonacci numbers
-```F(n) = F(n-1) + F(n-2)```
+This algorithm receives an input `n` and return the `n`-th number in the Fibonacci sequence. 
 
-```0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1587 ...```
+Formula:
+```
+F[1] = 1
+F[2] = 1
+F[n] = F[n-1] + F[n-2]
+```
+Output:
+```
+0 1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1587 ...
+```
 
-##### Idea: 
-The program can compute the Fibonacci up to a maximum number. The idea is to iterate all the numbers in range [0, max_num] in order to avoid side channel attacks and compute the Fibonacci number for each one. Keep only the result of the requested number and print it in the end.
+##### Implementation: 
+The algorithm computes the Fibonacci sequence up to a given maximum number (`max_num`), by iterating over all numbers in range `[0, max_num]`. This protects the input `n` against timing side-channels, since the execution time of Fibonacci is linear to that input. For that matter, the privacy-preserving version computes all Fibonacci numbers up to `max_num` and return only the result corresponfing to input `n`.
 
+CEAL Example
+------------
 [Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/fibonacci_s.sca):
-Compute the Fibonacci of the number given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (which is 12).
+Computes the Fibonacci of the number based on the input given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (in this case the output is `12`).
 
 ![alt text](./../graphs/fibonacci.png)

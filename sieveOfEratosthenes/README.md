@@ -1,13 +1,8 @@
 ### Sieve of Eratosthenes
-The sieve of Eratosthenes, is a simple, ancient algorithm for finding all prime numbers up to any given limit. It does so by iteratively marking as composite (i.e. not prime) the multiples of each prime, starting with the multiples of 2. In this benchmark, we print all prime numbers up to a fixed/maximum number using the sieve of Eratosthenes method.
-Given an open number ```e.g. Num = 20```, we will find every prime from 2 to Num and will print it if the number is prime, else we will print zero.
+This benchmark prints all prime numbers less than a maximum integer using the Sieve of Eratosthenes algorithm. For example, given an open number ```Num = 20```, the algorithm finds every prime in the range `[2,Num]` and prints a list containing all primes in the range, as well as a zero for each composite.
 
-**Open value:** The only open value will be the maximum number which will check if is prime. 
+**Unencrypted value:** The input corresponding to the maximum integer is not encrypted. 
 
-**Encrypted Values:** The primes and the number of primes found.
-
-**Result:** We want to protect both the number of primes found and the primes themselves. The only way to do this, is by returning the encryption of a number if it is prime, else the encryption of zero.
-
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/sieveOfEratosthenes_s.sca)
+**Encrypted Values:** All output values (primes or zeros) are encrypted. The cardinality of the set of primes is not disclosed. The latter is possible by either return the encrypted prime or the encryption of zero in the output set.
 
 ![alt text](./../graphs/primes.png)

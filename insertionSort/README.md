@@ -1,8 +1,5 @@
 ### Insertion Sort
-* Insertion sort is a simple sorting algorithm that builds the final sorted array one item at a time. 
-* __Threat Model:__ In this benchmark, we do not care to protect the size of the array. We are protecting the contents of both the input/unsorted and output/sorted arrays.
-
-As we defined in our threat model, we want to protect the contents of the array. Insertion sort has a comparison (```arr[j] > key```) which is a branch based on encrypted values.
+This algorithm receives an unsorted input array of integers and returns a new array, where all integers are in ascending order. Since all array elements are encrypted, there is a termination problem as it is not possible to evaluate the comparison ```arr[j] > key``` over encrypted values:
 ```
     ...
     while (j >= 0 && arr[j] > key) {
@@ -12,7 +9,8 @@ As we defined in our threat model, we want to protect the contents of the array.
     ...
 ```
 
-We use the G-function to compute the minimum and the maximum value of ```array[j-1]``` and ```array[j]```, and then we sort them in ascending order.
+This is resoved using function G, which allows to obliviously compute the minimum and the maximum value between ```array[j-1]``` and ```array[j]```, which allows to arrange them in ascending order.
+
 ```
 def insertionSort(array) {
     for (i = 1 ; i < size; i++) {

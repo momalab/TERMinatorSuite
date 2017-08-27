@@ -1,5 +1,5 @@
-### Endless Sieve of Eratosthenes
-We use the Sieve of Eratosthenes [implementation](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/) with rounds in order to keep calculating primes without the boundary of a maximum number that the simple sieve of Eratosthenes implementation has.
+### Endless Prime Number Sequence
+This algorithm uses the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/) iteratively to compute the sequence of prime number idefinitely. Unlike the Sieve of Eratosthenes algorithm that has a maximum limit, this algorithm runs in an infinite loop.
 
 ```
 void sieveOfEratosthenes(int *prime, int base) {

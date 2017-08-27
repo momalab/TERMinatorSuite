@@ -1,6 +1,6 @@
 ### Tak Function
-* In computer science, the Tak function is a recursive function, named after Ikuo Takeuchi. Tak function is a popular recursion performance test.
-* __Threat Model:__ Every variable is encrypted.
+The original Tak function is defined as:
+
 ``` 
 def tak(x, y, z)
     if y < x
@@ -10,7 +10,7 @@ def tak(x, y, z)
 end
 ```
 
-A version of the tak function that does one less recursive call is the following:
+A version of the Tak function that does one less recursive call is the following:
 ```
 def tak x, y, z) {
     while (x > y) {
@@ -25,10 +25,10 @@ def tak x, y, z) {
 }
 ```
 
-By having all three ```x```, ```y``` and ```z``` variables encrypted we have to deal with the **branch on encrypted values** problem. 
+By having all three ```x```, ```y``` and ```z``` variables encrypted, we address the termination problem, as it is not possible to test the termination condition using encrypted values. This is solved by introducing a new variable ```iter```, which will replaces the two conditions that are based on encrypted values (i.e., ```while (x > y)``` and its counterpart ```if (x <= y)```). Using the ```iter``` variable, Tak function always runs a maximum number of iterations corresponding to the range of variables ```x```, ```y``` and ```z```. 
 
-As a result, we introduced another variable ```iter``` which will replace the two conditions that are based on encrypted values (```while (x > y)```, and ```if (x <= y)```), which is basically the same condition inverted. By using the ```iter``` variable, tak function will always run the worst case scenario that can occur in the range of ```x```, ```y``` and ```z``` variables. We do not want the extra iterations to affect either our results or any other variable, thus we use the result of the G-function with input (```x > y```) in order to keep the desired value for each variable.
-Each recursive call will take as parameter a decreased by one value of iterations (```iter```) in order to guarantee a termination condition.
+To prevent unintended changes to the correct results or intermediate variables due to the additional iterations, the algorithm uses the output of function G on input (```x > y```), which allows keeping the desired value for each variable.
+Each recursive call uses a decreasing input parameter (```iter```), which  corresponds to the remaining recusion depth, and ensures safe termination of the algorithm.
 
 ```
 def tak_unrolled(x, y, z, iter) {
@@ -45,7 +45,7 @@ def tak_unrolled(x, y, z, iter) {
 }
 ```
 
-**Important:** The user is responsible of setting a correct value for the ```iter``` variable. We have noticed that if ```x```, ```y``` and ```z``` are in the same range ```[0, MAX_NUM]```, the minimum value the iterations variable can afford is ```MAX_NUM-1```.
+**Important:** The preogrammer is responsible to setting a correct initial value for the ```iter``` parameter. It can be shown that if ```x```, ```y``` and ```z``` are in the same range ```[0, MAX_NUM]```, the minimum value the iterations for correct results is ```MAX_NUM-1```.
 For example:
 ```
 #define MAX_NUM 3
