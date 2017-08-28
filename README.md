@@ -8,12 +8,12 @@ Step 1: clone and set up the cryptoleq [repository](https://github.com/momalab/c
 
 Step 2: clone the benchmarks repository:
 
-```git clone https://github.com/momalab/privacy_benchmarks.git```
+```git clone https://github.com/momalab/TERMinatorSuite.git```
 
 
 Step 3: copy all the benchmark files inside the cryptoleq directory:
 
-```cp -rf ./privacy-benchmarks/* ./cryptoleq/scr/ceal/tests/```
+```cp -rf ./TERMinatorSuite/* ./cryptoleq/scr/ceal/tests/```
 
 
 
