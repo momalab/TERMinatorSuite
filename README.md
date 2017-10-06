@@ -51,8 +51,19 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 
 
 - __[Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/master/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
-    * Private set intersection allows two parties, holding sets A and B respectively, to compute all elements common to both A and B, without revealing any information about the non-common ellements in the sets.
+    * Private set intersection allows two parties, holding sets A and B respectively, to compute all elements common to both A and B, without revealing any information about the non-common elements in the sets.
     * __Threat Model:__ In this benchmark, all input and output set elements are encrypted to preserve their privacy. The size of sets A and B is not encrypted. If one set is smaller, it is extended with copies of a null ciphertext (`epsilon`).
+
+
+- __[Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/Deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
+    * Data deduplication is a specialized data compression technique for eliminating duplicate copies of data.
+    * __Threat Model:__ In this benchmark, all input and output array elements are encrypted to preserve their privacy. The size of input array is not encrypted. If the output array set is smaller (after removing same elements), it is extended with copies of a null ciphertext (`epsilon`).
+
+
+- __Set Union__ [(link)](https://en.wikipedia.org/wiki/Union_(set_theory))
+    * Private set union allows two parties, holding sets A and B respectively, to compute all elements that exist either in A, or in B, or in both of them, without revealing any information about the non-common elements in the sets.
+    * __Threat Model:__ This benchmark shares the same threat model as the [Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/Deduplication).
+    * This is not a different benchmark, as it is based in the Data Deduplication benchmark. In order to compute the union of two sets, one should first concatenate the two sets, and then apply the Deduplication algorithm in order to remove duplicate objects.
 
 
 - __[Fibonacci](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci)__ [(link)](http://mathworld.wolfram.com/FibonacciNumber.html)
