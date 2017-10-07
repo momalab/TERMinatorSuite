@@ -55,7 +55,7 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ In this benchmark, all input and output set elements are encrypted to preserve their privacy. The size of sets A and B is not encrypted. If one set is smaller, it is extended with copies of a null ciphertext (`epsilon`).
 
 
-- __[Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/Deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
+- __[Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
     * Data deduplication is a specialized data compression technique for eliminating duplicate copies of data.
     * __Threat Model:__ In this benchmark, all input and output array elements are encrypted to preserve their privacy. The size of input array is not encrypted. If the output array set is smaller (after removing same elements), it is extended with copies of a null ciphertext (`epsilon`).
 
