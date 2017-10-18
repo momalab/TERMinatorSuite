@@ -97,6 +97,11 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__  Similar to the Sieve of Eratosthenes, we protect the privacy of all computed primes. 
 
 
+- __[Bitwise Operators](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators)__ [(link)](https://en.wikipedia.org/wiki/Bitwise_operation)
+    * Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise OR, AND, and XOR operations by iterating all bits of both numbers and by comparing the LSBs.
+    * __Threat Model:__ The word size (beta) is open, while the input and the output values are all encrypted.
+
+
 - __[Number Occurrences](https://github.com/momalab/privacy_benchmarks/tree/master/numOccurrences)__
     * This benchmark receives a set of integers and computes the frequency that a specific test value occurs in the set.
     * __Threat Model:__ We protect the privacy of both the test value, as well as all elements in the input set using encryption.
