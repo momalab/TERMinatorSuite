@@ -1,0 +1,72 @@
+####################################
+## OR Bitwise Operator
+##########################################################################
+## OR (X, Y, Length)
+##########################################################################
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+.mov _o0 i
+.mov _s0 x_or_y
+
+for_all_bits:
+    ## Compute LSB(x)
+    ._sd2 x x_half  # x_half = x / 2
+    .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+    x_half lsb_x;
+    x_half lsb_x;
+
+    ## Compute LSB(y)
+    ._sd2 y y_half  # y_half = y / 2
+    .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+    y_half lsb_y;
+    y_half lsb_y;
+
+    ## Compute LSB(x) OR LSB(y)
+    .add lsb_x lsb_y
+    ._G lsb_y _s1 lsb   # lsb = G(lsb_x + lsb_y, 1);
+
+    .mov i tmp
+    .mov _o0 j
+    .mov lsb exp_result             # exp_result = lsb
+    _o0 tmp end_exp_loop;
+    exp_loop:                       # for (j = 0; j < i; j++)
+        .smul exp_result _s2 exp_result #     exp_result *= 2;
+        .add _o1 j
+    .ifneq j i exp_loop
+    end_exp_loop:
+
+    .add exp_result x_or_y
+
+    ## Continue with next bits
+    ._sd2 x x
+    ._sd2 y y 
+    
+    .add _o1 i      # i++
+.ifneq i length for_all_bits
+.outd x_or_y
+
+.halt
+
+
+## OR inputs, output
+. x:~6
+. y:~8
+. length:4
+. x_or_y:~0
+
+## OR local variables
+. i:0 j:0
+. x_half:0 y_half:0 lsb_x:0 lsb_y:0 lsb:0
+. tmp:0
+. exp:0 exp_result:1
+
+## Constants
+. _o0:0
+. _s2:~2
+
+
+.include "secure.lib"
+
