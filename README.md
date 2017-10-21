@@ -102,6 +102,12 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ The word size (beta) is open, while the input and the output values are all encrypted.
 
 
+- __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/privacy_benchmarks/tree/master/jenkinsHash)__ [(link)](https://en.wikipedia.org/wiki/Jenkins_hash_function)
+    * The Jenkins hash functions are a collection of (non-cryptographic) hash functions for multi-byte keys designed by Bob Jenkins.
+    * Jenkins hash function uses a lot of bitwise operations, which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * __Threat Model:__ The size of the array is unencrypted, while all the array elements and the output are encrypted.
+
+
 - __[Private Information Retrieval](https://github.com/momalab/privacy_benchmarks/tree/master/PIR)__ [(link)](https://en.wikipedia.org/wiki/Private_information_retrieval)
     * Private Information Retrieval (PIR) is a classic example of applications which require private computation. In the simplest scenario, the user maintains an encrypted database on an untrusted server. At some point, the user desires to retrieve some data from the database, without revealing any information about the inquiry itself, data stored in the database or the result of the inquiry.
     * As a simple example, the database can be visualized as a table of key-value pair entries, e.g. {1:6, 2:7, 3:8, 4:9, 5:0, 6:1}. An inquiry to the database is a particular key and the expected output is the corresponding value. So, in this example, when the key 3 is requested the output returned to the user should be 8. As mentioned before, both the key input and the return result are encrypted. Therefore, PIR entails a brute-force search through all encrypted entries, secretly comparing database keys with the encrypted input, eventually returning the encrypted value when the keys match.
