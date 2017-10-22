@@ -1,5 +1,6 @@
 ### Bitwise Operators
-Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise OR, AND, and XOR operations by iterating all bits of both numbers and by comparing the LSBs.
+Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise ```OR, AND, and XOR``` operations by iterating all bits of both numbers and by comparing the LSBs.
+We have also added two more complex operators, ```ROR and ROL```, which are ROtate Right and Left respectively.
 
 **Open values:** The word size (beta).
 

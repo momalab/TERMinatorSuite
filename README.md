@@ -98,7 +98,8 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 
 
 - __[Bitwise Operators](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators)__ [(link)](https://en.wikipedia.org/wiki/Bitwise_operation)
-    * Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise OR, AND, and XOR operations by iterating all bits of both numbers and by comparing the LSBs.
+    * Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise ```OR, AND, and XOR``` operations by iterating all bits of both numbers and by comparing the LSBs.
+    * We have also added two more complex operators, ```ROR and ROL```, which are ROtate Right and Left respectively. Rotate operators are widely used in cryptographic block ciphers, like Speck and Simon.
     * __Threat Model:__ The word size (beta) is open, while the input and the output values are all encrypted.
 
 
