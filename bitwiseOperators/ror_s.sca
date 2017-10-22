@@ -1,0 +1,53 @@
+####################################
+## ROR (Rotate Right) Bitwise Operator
+##########################################################################
+## ROR (X, Y) : Rotates number X right Y times
+##########################################################################
+
+.pragma k=5 r=17 beta=32
+.pragma PQ=4281167959.4271299633
+.pragma io=ts incdir=../lib/
+
+.mov _o0 j      # j = 0
+rotate_start:
+
+    ################### start of ROTATE RIGHT 1 POSITION ###################
+    ## Compute LSB(x)
+    ._sd2 x x_half  # x_half = x / 2
+    .mov x lsb    # lsb = x - (x_half + x_half)
+    x_half lsb;
+    x_half lsb;
+    .mov lsb y      # y = lsb
+    .mov _o1 i
+    for_all_bits:   # for (int i = 0 ; i < WORD_SIZE-1 ; i++)
+        .add y y        # y += y
+        .add _o1 i      # i++
+    .ifneq i WORD_SIZE for_all_bits
+    lsb x;          # x = x - lsb
+    ._sd2 x x       # x /= 2;
+    .add x y        # y += x
+    .outd y
+    ################### end of ROTATE RIGHT 1 POSITION ###################
+
+    .mov y x
+    .add _o1 j      # j++
+.ifneq j POSITIONS rotate_start
+
+.outd x
+.halt
+
+## and inputs, output
+. x:~5 y:~0
+. POSITIONS:4
+
+# variables
+. i:0 j:0
+. x_half:0 lsb:0
+
+## Constants
+. WORD_SIZE:32
+. _o0:0
+
+
+.include "secure.lib"
+
