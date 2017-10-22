@@ -1,0 +1,59 @@
+####################################
+## ROL (Rotate Left) Bitwise Operator
+##########################################################################
+## ROL (X, Y) : Rotates number X left Y times
+##########################################################################
+
+.pragma k=5 r=17 beta=32
+.pragma PQ=4281167959.4271299633
+.pragma io=ts incdir=../lib/
+
+.mov _o0 j      # j = 0
+rotate_start:
+
+    ################### start of ROTATE LEFT 1 POSITION ###################
+    .mov x tmp      # tmp = x
+    .mov _o1 i
+    for_all_bits1:   # for (int i = 0 ; i < WORD_SIZE-1 ; i++)
+        ._sd2 x x_half  # x_half = x / 2
+        .mov x lsb    # lsb = x - (x_half + x_half)
+        x_half lsb;
+        x_half lsb;
+        lsb x;          # x = x - lsb
+        ._sd2 x x       # x /= 2;
+        .add _o1 i      # i++
+    .ifneq i WORD_SIZE for_all_bits1
+    .mov x msb      # msb = x
+    .mov _o1 i
+    for_all_bits2:   # for (int i = 0 ; i < WORD_SIZE-1 ; i++)
+        .add x x        # x += x
+        .add _o1 i      # i++
+    .ifneq i WORD_SIZE for_all_bits2
+    x tmp;          # tmp = tmp - x
+    .add tmp tmp    # tmp += tmp
+    .add msb tmp
+    .outd tmp
+    ################### end of ROTATE LEFT 1 POSITION ###################
+
+    .mov tmp x
+    .add _o1 j      # j++
+.ifneq j POSITIONS rotate_start
+
+.outd x
+.halt
+
+## and inputs, output
+. x:~5 y:~0
+. POSITIONS:4
+
+# variables
+. i:0 j:0
+. x_half:0 lsb:0 msb:0 tmp:0
+
+## Constants
+. WORD_SIZE:32
+. _o0:0
+
+
+.include "secure.lib"
+
