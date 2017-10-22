@@ -33,7 +33,7 @@ for_all_bits:
     .mov lsb exp_result             # exp_result = lsb
     _o0 tmp end_exp_loop;
     exp_loop:                       # for (j = 0; j < i; j++)
-        .smul exp_result _s2 exp_result #     exp_result *= 2;
+        .add exp_result exp_result #     exp_result *= 2;
         .add _o1 j
     .ifneq j i exp_loop
     end_exp_loop:
