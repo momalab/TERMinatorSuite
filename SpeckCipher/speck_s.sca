@@ -1,0 +1,199 @@
+####################################
+## SPECK CIPHER
+##########################################################################
+## encrypt(uint32_t pt[2], uint32_t ct[2], uint32_t K[2])
+##########################################################################
+
+.pragma k=5 r=17 beta=16
+.pragma PQ=63199.64567
+.pragma io=ts incdir=../lib/
+
+############################## SPECK ENCRYPT start ##############################
+.mov pt0 x
+.mov pt1 y
+
+.mov _o0 sp_i
+for_all_rounds:
+
+    .mov y rr_x     ## y = ROR(y, 7); ##
+    ############# ROTATE RIGHT 7 POSITIONS start (input rr_x) #############
+    .mov _o0 j      # j = 0
+    rotate_start1:
+        ######### ROTATE RIGHT 1 POSITION start #########
+        ## Compute LSB(rr_x)
+        ._sd2 rr_x rr_x_half  # rr_x_half = rr_x / 2
+        .mov rr_x lsb      # lsb = rr_x - (rr_x_half + rr_x_half)
+        rr_x_half lsb;
+        rr_x_half lsb;
+        .mov lsb rr_y      # rr_y = lsb
+        .mov _o1 i
+        for_all_bits1:   # for (int i = 0 ; i < WORD_SIZE-1 ; i++)
+            .add rr_y rr_y        # rr_y += rr_y
+            .add _o1 i      # i++
+        .ifneq i WORD_SIZE for_all_bits1
+        lsb rr_x;          # rr_x = rr_x - lsb
+        ._sd2 rr_x rr_x       # rr_x /= 2;
+        .add rr_x rr_y        # rr_y += rr_x
+        ######### ROTATE RIGHT 1 POSITION end #########
+        .mov rr_y rr_x
+        .add _o1 j      # j++
+    .ifneq j rot_a rotate_start1
+    ############# ROTATE RIGHT 7 POSITIONS end (output rr_x) #############
+    .mov rr_x y
+
+    .add x y    # y += x
+    .mov21 K key_i
+
+    .mov y xor_x
+    .mov key_i xor_y
+    ###################### XOR start (inputs xor_x xor_y) #######################
+    .mov _o0 i
+    .mov _s0 x_xor_y
+    for_all_bits2:
+        ## Compute LSB(xor_x)
+        ._sd2 xor_x x_half  # x_half = xor_x / 2
+        .mov xor_x lsb_x    # lsb_x = xor_x - (x_half + x_half)
+        x_half lsb_x;
+        x_half lsb_x;
+        ## Compute LSB(xor_y)
+        ._sd2 xor_y y_half  # y_half = xor_y / 2
+        .mov xor_y lsb_y    # lsb_y = xor_y - (y_half + y_half)
+        y_half lsb_y;
+        y_half lsb_y;
+        ## Compute LSB(xor_x) XOR LSB(xor_y)
+        .mov lsb_x lsbx_or_lsby     # lsbx_or_lsby = lsb_x + lsb_y
+        .add lsb_y lsbx_or_lsby
+        .smul lsb_x lsb_y lsbx_and_lsby # lsbx_and_lsby = lsb_x * lsb_y
+        .mov _s1 lsbx_and_lsby_inv
+        lsbx_and_lsby lsbx_and_lsby_inv;        # lsbx_and_lsby_inv = (1 - (lsb_x * lsb_y)
+        .smul lsbx_or_lsby lsbx_and_lsby_inv lsb    # lsb = (lsb_x + lsb_y) * (1 - (lsb_x * lsb_y));
+        .mov i tmp
+        .mov _o0 j
+        .mov lsb exp_result             # exp_result = lsb
+        _o0 tmp end_exp_loop1;
+        exp_loop1:                       # for (j = 0; j < i; j++)
+            .add exp_result exp_result #     exp_result *= 2;
+            .add _o1 j
+        .ifneq j i exp_loop1
+        end_exp_loop1:
+        .add exp_result x_xor_y
+        ## Continue with next bits
+        ._sd2 xor_x xor_x
+        ._sd2 xor_y xor_y 
+        .add _o1 i      # i++
+    .ifneq i WORD_SIZE for_all_bits2
+    ####################### XOR end (output x_xor_y) ########################
+    .mov x_xor_y y
+
+    .mov x rr_x     ## x = ROR(x, 14); ##
+    ############# ROTATE RIGHT 14 POSITIONS start (input rr_x) #############
+    .mov _o0 j      # j = 0
+    rotate_start2:
+        ######### ROTATE RIGHT 1 POSITION start #########
+        ## Compute LSB(rr_x)
+        ._sd2 rr_x rr_x_half  # rr_x_half = rr_x / 2
+        .mov rr_x lsb      # lsb = rr_x - (rr_x_half + rr_x_half)
+        rr_x_half lsb;
+        rr_x_half lsb;
+        .mov lsb rr_y      # rr_y = lsb
+        .mov _o1 i
+        for_all_bits3:   # for (int i = 0 ; i < WORD_SIZE-1 ; i++)
+            .add rr_y rr_y        # rr_y += rr_y
+            .add _o1 i      # i++
+        .ifneq i WORD_SIZE for_all_bits3
+        lsb rr_x;          # rr_x = rr_x - lsb
+        ._sd2 rr_x rr_x       # rr_x /= 2;
+        .add rr_x rr_y        # rr_y += rr_x
+        ######### ROTATE RIGHT 1 POSITION end #########
+        .mov rr_y rr_x
+        .add _o1 j      # j++
+    .ifneq j rot_b rotate_start2
+    ############# ROTATE RIGHT 14 POSITIONS end (output rr_x) #############
+    .mov rr_x x
+
+    .mov x xor_x
+    .mov y xor_y
+    ###################### XOR start (inputs xor_x xor_y) #######################
+    .mov _o0 i
+    .mov _s0 x_xor_y
+    for_all_bits4:
+        ## Compute LSB(xor_x)
+        ._sd2 xor_x x_half  # x_half = xor_x / 2
+        .mov xor_x lsb_x    # lsb_x = xor_x - (x_half + x_half)
+        x_half lsb_x;
+        x_half lsb_x;
+        ## Compute LSB(xor_y)
+        ._sd2 xor_y y_half  # y_half = xor_y / 2
+        .mov xor_y lsb_y    # lsb_y = xor_y - (y_half + y_half)
+        y_half lsb_y;
+        y_half lsb_y;
+        ## Compute LSB(xor_x) XOR LSB(xor_y)
+        .mov lsb_x lsbx_or_lsby     # lsbx_or_lsby = lsb_x + lsb_y
+        .add lsb_y lsbx_or_lsby
+        .smul lsb_x lsb_y lsbx_and_lsby # lsbx_and_lsby = lsb_x * lsb_y
+        .mov _s1 lsbx_and_lsby_inv
+        lsbx_and_lsby lsbx_and_lsby_inv;        # lsbx_and_lsby_inv = (1 - (lsb_x * lsb_y)
+        .smul lsbx_or_lsby lsbx_and_lsby_inv lsb    # lsb = (lsb_x + lsb_y) * (1 - (lsb_x * lsb_y));
+        .mov i tmp
+        .mov _o0 j
+        .mov lsb exp_result             # exp_result = lsb
+        _o0 tmp end_exp_loop2;
+        exp_loop2:                       # for (j = 0; j < i; j++)
+            .add exp_result exp_result #     exp_result *= 2;
+            .add _o1 j
+        .ifneq j i exp_loop2
+        end_exp_loop2:
+        .add exp_result x_xor_y
+        ## Continue with next bits
+        ._sd2 xor_x xor_x
+        ._sd2 xor_y xor_y 
+        .add _o1 i      # i++
+    .ifneq i WORD_SIZE for_all_bits4
+    .outd x_xor_y
+    ####################### XOR end (output x_xor_y) ########################
+    .mov x_xor_y x
+
+    .inc K
+    .add _o1 sp_i   # sp_i++
+.ifneq sp_i ROUNDS for_all_rounds
+
+.outd x
+.outd y
+
+############################### SPECK ENCRYPT end ###############################
+
+# Verify Result
+.outd ct0
+.outd ct1
+
+.halt
+
+###### SPECK INPUTS OUTPUTS ######
+. ROUNDS:22
+. pt0:~26956 pt1:~25972
+. ct0:~17138 ct1:~43112
+. rot_a:7 rot_b:14
+. WORD_SIZE:16
+##################################
+
+# variables
+. ptr:db_start K:db_start
+. x:0 y:0 tmp:0
+. i:0 j:0 sp_i:0
+. rr_x_half:0 lsb:0
+
+. rr_x:0 rr_y:0 key_i:0
+. xor_y:0 xor_x:0 x_xor_y:0
+. x_half:0 y_half:0 lsb_y:0 lsb_x:0 lsbx_or_lsby:0 lsbx_and_lsby:0 lsbx_and_lsby_inv:0 exp_result:0
+
+## Constants
+. _o0:0 _o2:2 _o7:7 _o14:14
+
+
+db_start:
+.include datax "exp22.sec"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+

@@ -31,6 +31,12 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 
 **All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).** 
 
+- __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SpeckCipher)__ [(link)](https://en.wikipedia.org/wiki/Speck_(cipher))
+    * Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations. Speck is an add-rotate-xor (ARX) cipher.
+    * Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
+
+
 - __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
     * The 8-queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The N-Queens problem is the problem of placing N queens on an NxN chessboard.
     * __Threat Model:__ In this benchmark, the final solution needs to remain private, so all queen positions and intermediate values are encrypted. The only input is the number of the queens, which is defined as an open value.
