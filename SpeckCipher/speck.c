@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <string.h>
+#include <inttypes.h>
 
 #define ROUNDS 22
 
@@ -29,7 +29,7 @@ void speck_encrypt_ll(uint16_t const pt[static 2], uint16_t ct[static 2], uint16
         y ^= K[i];
         x = ROR(x, 14);
         x ^= y;
-        printf("%zu ", x);
+        printf("%" PRIu16 " ", x);
     }
     printf("\n\n");
     ct[0] = x;
@@ -52,22 +52,22 @@ int main(void) {
     uint16_t buffer[2] = { 0 };
     uint16_t exp[ROUNDS] = { 256, 5394, 24957, 5208, 26905, 30690, 3209, 52443, 61418, 20019, 30452, 22902, 61067, 56068, 17943, 62334, 34740, 36554, 60827, 14930, 33321, 60772 };
 
-    printf("Plain text: %zu %zu\n\n", plain_text[0], plain_text[1]);
+    printf("Plain text: %" PRIu16 " %" PRIu16 "\n\n", plain_text[0], plain_text[1]);
     printf("================== SPECK ENCRYPTION ==================\n");
-    speck_encrypt_ll(plain_text, buffer, exp);
-    if (memcmp(buffer, cipher_text, sizeof(cipher_text))) {
+    speck_encrypt(plain_text, buffer, exp);
+    if (buffer[0] != cipher_text[0] || buffer[1] != cipher_text[1]) {
         printf("encryption failed\n");
         return EXIT_FAILURE;
     }
-    printf("==> Cipher text: %zu %zu\n\n", buffer[0], buffer[1]);
+    printf("==> Cipher text: %" PRIu16 " %" PRIu16 "\n\n", buffer[0], buffer[1]);
 
     printf("================== SPECK DECRYPTION ==================\n");
     speck_decrypt(cipher_text, buffer, exp);
-    if (memcmp(buffer, plain_text, sizeof(plain_text))) {
+    if (buffer[0] != plain_text[0] || buffer[1] != plain_text[1]) {
         printf("decryption failed\n");
         return EXIT_FAILURE;
     }
-    printf("==> Plain text: %zu %zu (decrypted cipher text)\n\n", buffer[0], buffer[1]);
+    printf("==> Plain text: %" PRIu16 " %" PRIu16 " (decrypted cipher text)\n\n", buffer[0], buffer[1]);
 
     printf("Encryption and decryption success\n");
     return EXIT_SUCCESS;
