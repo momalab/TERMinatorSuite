@@ -32,8 +32,14 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 **All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).** 
 
 - __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SpeckCipher)__ [(link)](https://en.wikipedia.org/wiki/Speck_(cipher))
-    * Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations. Speck is an add-rotate-xor (ARX) cipher.
+    * Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
     * Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
+
+
+- __[Simon (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SimonCipher)__ [(link)](https://en.wikipedia.org/wiki/Simon_(cipher))
+    * Simon is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Simon has been optimized for performance in hardware implementations, while its sister algorithm, Speck, has been optimized for software implementations. Simon is an add-rotate-xor (ARX) cipher.
+    * Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
 

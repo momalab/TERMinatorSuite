@@ -1,5 +1,5 @@
 ### Speck (cipher)
-Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations. Speck is an add-rotate-xor (ARX) cipher.
+Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
 
 TERMinator implements Speck for `Block size = 32` and `Key size = 64` bits.
 
@@ -20,7 +20,7 @@ void speck_encrypt(uint16_t const pt[static 2], uint16_t ct[static 2], uint16_t 
 }
 ```
 
-#####Speck32/64 Input/Test (Hexadecimal) Vector
+##### Speck32/64 Input/Test (Hexadecimal) Vector
 ```
 Key: 1918 1110 0908 0100
 Plaintext: 6574 694c
