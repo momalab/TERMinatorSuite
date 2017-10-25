@@ -12,7 +12,7 @@ This algorithm receives an unsorted input array of integers and returns a new ar
 This is resoved using function G, which allows to obliviously compute the minimum and the maximum value between ```array[j-1]``` and ```array[j]```, which allows to arrange them in ascending order.
 
 ```
-def insertionSort(array) {
+void insertionSort(array) {
     for (i = 1 ; i < size; i++) {
         j = i;
         while (j != 0) {
@@ -29,6 +29,12 @@ def insertionSort(array) {
             j--;
         }
     }
+}
+```
+
+```
+int gfun(int x, int y) {
+    return (x <= 0) ? 0 : y;
 }
 ```
 
