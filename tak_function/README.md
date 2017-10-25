@@ -2,19 +2,20 @@
 The original Tak function is defined as:
 
 ``` 
-def tak(x, y, z)
-    if y < x
+int tak(int x, int y, int z)
+    if (y < x) {
         return tak(tak(x-1, y, z), tak(y-1, z, x), tak(z-1, x, y))
-    else
+    } else {
         return z
-end
+    }
+}
 ```
 
 A version of the Tak function that does one less recursive call is the following:
 ```
-def tak x, y, z) {
+int tak(int x, int y, int z) {
     while (x > y) {
-        oldx = x, oldy = y;
+        int oldx = x, oldy = y;
         x = tak(x - 1, y, z);
         y = tak(y - 1, z, oldx);
         if (x <= y) 
@@ -31,17 +32,23 @@ To prevent unintended changes to the correct results or intermediate variables d
 Each recursive call uses a decreasing input parameter (```iter```), which  corresponds to the remaining recusion depth, and ensures safe termination of the algorithm.
 
 ```
-def tak_unrolled(x, y, z, iter) {
-    sel = gfun(x-y, 1);     // sel = x > y;
-    while (iter--) {
-        oldx = (1 - sel) * oldx + sel * x;
-        oldy = (1 - sel) * oldy + sel * y;
-        x = (1 - sel) * x + sel * tak_unrolled(x - 1, y, z, iter);    
+int tak_unrolled(int x, int y, int z, int iter) {
+    int sel = gfun(x-y, 1);                                                 // sel = x > y;
+    while (iter--) {                                                        // perform fixed iterations
+        int oldx = (1 - sel) * oldx + sel * x;                              // update oldx depending on the value of sel
+        int oldy = (1 - sel) * oldy + sel * y;
+        x = (1 - sel) * x + sel * tak_unrolled(x - 1, y, z, iter);          // keep either x or the result of recursion
         y = (1 - sel) * y + sel * tak_unrolled(y - 1, z, oldx, iter);
-        sel = gfun(x-y, 1);     // sel = x > y;
+        sel = gfun(x-y, 1);                                                 // update sel = x > y;
         z = (1 - sel) * z + sel * tak_unrolled(z - 1, oldx, oldy, iter);
     }
     return z;
+}
+```
+
+```
+int gfun(int x, int y) {
+    return (x <= 0) ? 0 : y;
 }
 ```
 
