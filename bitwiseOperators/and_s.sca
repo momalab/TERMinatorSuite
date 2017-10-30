@@ -32,7 +32,7 @@ for_all_bits:
     .mov lsb exp_result             # exp_result = lsb
     _o0 tmp end_exp_loop;
     exp_loop:                       # for (j = 0; j < i; j++)
-        .add exp_result exp_result #     exp_result *= 2;
+        .add exp_result exp_result
         .add _o1 j
     .ifneq j i exp_loop
     end_exp_loop:
@@ -40,9 +40,8 @@ for_all_bits:
     .add exp_result x_and_y
 
     ## Continue with next bits
-    ._sd2 x x
-    ._sd2 y y 
-    
+    .mov x_half x
+    .mov y_half y
     .add _o1 i      # i++
 .ifneq i length for_all_bits
 .outd x_and_y

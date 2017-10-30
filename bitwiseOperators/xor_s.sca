@@ -4,8 +4,8 @@
 ## XOR (X, Y, Length)
 ##########################################################################
 
-.pragma k=5 r=17 beta=8
-.pragma PQ=239.251
+.pragma k=5 r=17 beta=24
+.pragma PQ=63199.64567
 .pragma io=ts incdir=../lib/
 
 .mov _o0 i
@@ -43,11 +43,11 @@ for_all_bits:
     end_exp_loop:
 
     .add exp_result x_xor_y
+    .outd x_xor_y
 
     ## Continue with next bits
-    ._sd2 x x
-    ._sd2 y y 
-    
+    .mov x_half x
+    .mov y_half y
     .add _o1 i      # i++
 .ifneq i length for_all_bits
 .outd x_xor_y
@@ -56,9 +56,9 @@ for_all_bits:
 
 
 ## XOR inputs, output
-. x:~13
-. y:~12
-. length:4
+. x:~1025
+. y:~16
+. length:11
 . x_xor_y:~0
 
 ## XOR local variables

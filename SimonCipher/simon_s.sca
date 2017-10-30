@@ -34,7 +34,7 @@ for_all_rounds:
             .add _o1 i      # i++
         .ifneq i WORD_SIZE for_all_bits1
         lsb rr_x;          # rr_x = rr_x - lsb
-        ._sd2 rr_x rr_x       # rr_x /= 2;
+        .mov rr_x_half rr_x       # rr_x /= 2;
         .add rr_x rr_y        # rr_y += rr_x
         ######### ROTATE RIGHT 1 POSITION end #########
         .mov rr_y rr_x
@@ -60,7 +60,7 @@ for_all_rounds:
             .add _o1 i      # i++
         .ifneq i WORD_SIZE for_all_bits2
         lsb rr_x;          # rr_x = rr_x - lsb
-        ._sd2 rr_x rr_x       # rr_x /= 2;
+        .mov rr_x_half rr_x       # rr_x /= 2;
         .add rr_x rr_y        # rr_y += rr_x
         ######### ROTATE RIGHT 1 POSITION end #########
         .mov rr_y rr_x
@@ -99,8 +99,8 @@ for_all_rounds:
         end_exp_loop1:
         .add exp_result x_and_y
         ## Continue with next bits
-        ._sd2 and_x and_x
-        ._sd2 and_y and_y 
+        .mov x_half and_x
+        .mov y_half and_y 
         .add _o1 i      # i++
     .ifneq i WORD_SIZE and_start
     ####################### AND end (output x_and_y) ########################
@@ -140,8 +140,8 @@ for_all_rounds:
         end_exp_loop2:
         .add exp_result x_xor_y
         ## Continue with next bits
-        ._sd2 xor_x xor_x
-        ._sd2 xor_y xor_y 
+        .mov x_half xor_x
+        .mov y_half xor_y 
         .add _o1 i      # i++
     .ifneq i WORD_SIZE for_all_bits3
     ####################### XOR end (output x_xor_y) ########################
@@ -164,7 +164,7 @@ for_all_rounds:
             .add _o1 i      # i++
         .ifneq i WORD_SIZE for_all_bits4
         lsb rr_x;          # rr_x = rr_x - lsb
-        ._sd2 rr_x rr_x       # rr_x /= 2;
+        .mov rr_x_half rr_x       # rr_x /= 2;
         .add rr_x rr_y        # rr_y += rr_x
         ######### ROTATE RIGHT 1 POSITION end #########
         .mov rr_y rr_x
@@ -207,8 +207,8 @@ for_all_rounds:
         end_exp_loop3:
         .add exp_result x_xor_y
         ## Continue with next bits
-        ._sd2 xor_x xor_x
-        ._sd2 xor_y xor_y 
+        .mov x_half xor_x
+        .mov y_half xor_y 
         .add _o1 i      # i++
     .ifneq i WORD_SIZE for_all_bits5
     ####################### XOR end (output x_xor_y) ########################
@@ -250,8 +250,8 @@ for_all_rounds:
         end_exp_loop4:
         .add exp_result x_xor_y
         ## Continue with next bits
-        ._sd2 xor_x xor_x
-        ._sd2 xor_y xor_y 
+        .mov x_half xor_x
+        .mov y_half xor_y 
         .add _o1 i      # i++
     .ifneq i WORD_SIZE for_all_bits6
     ####################### XOR end (output x_xor_y) ########################

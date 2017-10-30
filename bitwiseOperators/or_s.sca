@@ -41,9 +41,8 @@ for_all_bits:
     .add exp_result x_or_y
 
     ## Continue with next bits
-    ._sd2 x x
-    ._sd2 y y 
-    
+    .mov x_half x
+    .mov y_half y
     .add _o1 i      # i++
 .ifneq i length for_all_bits
 .outd x_or_y
