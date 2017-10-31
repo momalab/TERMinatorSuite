@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-uint32_t jenkins_16b_ll(const uint16_t* key, size_t length) {
+uint16_t jenkins_16b_ll(const uint16_t* key, size_t length) {
     size_t i = 0;
     uint32_t hash = 0;
     uint32_t temp;
