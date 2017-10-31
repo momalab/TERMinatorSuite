@@ -31,12 +31,12 @@ Ciphertext: c69b e9bb
 
 **Encrypted Values:** The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
-Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators) that TERMinator Suite provides.
 
-(Key Scheduler) : The [simon_expand.c](https://github.com/momalab/privacy_benchmarks/tree/master/SimonCipher/simon_expand.c) program is used to generate the round_key[ROUNDS] from the key[KEY_LEN].
+(Key Scheduler) : The [simon_expand.c](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/SimonCipher/simon_expand.c) program is used to generate the round_key[ROUNDS] from the key[KEY_LEN].
 
 **The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.opn` denotes an unencrypted input file, while `.sec` denotes an encrypted input file.**
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/specksimon.png)
+![alt text](../../graphs/specksimon.png)

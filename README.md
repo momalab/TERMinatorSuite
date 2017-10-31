@@ -32,15 +32,15 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 
 **All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).** 
 
-- __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SpeckCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
+- __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/SpeckCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
     * Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
-    * Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
 
-- __[Simon (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
+- __[Simon (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
     * Simon is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Simon has been optimized for performance in hardware implementations, while its sister algorithm, Speck, has been optimized for software implementations. Simon is an add-rotate-xor (ARX) cipher.
-    * Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
 
@@ -110,15 +110,15 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__  Similar to the Sieve of Eratosthenes, we protect the privacy of all computed primes. 
 
 
-- __[Bitwise Operators](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators)__ [(link)](https://en.wikipedia.org/wiki/Bitwise_operation)
+- __[Bitwise Operators](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators)__ [(link)](https://en.wikipedia.org/wiki/Bitwise_operation)
     * Cryptoleq does not support natively bitwise operations. Thus we have simulated bitwise ```OR, AND, and XOR``` operations by iterating all bits of both numbers and by comparing the LSBs.
     * We have also added two more complex operators, ```ROR and ROL```, which are ROtate Right and Left respectively. Rotate operators are widely used in cryptographic block ciphers, like Speck and Simon.
     * __Threat Model:__ The word size (beta) is open, while the input and the output values are all encrypted.
 
 
-- __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/privacy_benchmarks/tree/master/jenkinsHash)__ [(link)](https://en.wikipedia.org/wiki/Jenkins_hash_function)
+- __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/jenkinsHash)__ [(link)](https://en.wikipedia.org/wiki/Jenkins_hash_function)
     * The Jenkins hash functions are a collection of (non-cryptographic) hash functions for multi-byte keys designed by Bob Jenkins.
-    * Jenkins hash function uses a lot of bitwise operations, which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
+    * Jenkins hash function uses a lot of bitwise operations, which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The size of the array is unencrypted, while all the array elements and the output are encrypted.
 
 
@@ -128,7 +128,7 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ The size of the encrypted database is unencrypted, while the input, the keys and the values are all encrypted.
 
 
-- __[Number Occurrences](https://github.com/momalab/privacy_benchmarks/tree/master/numOccurrences)__
+- __[Number Occurrences](https://github.com/momalab/privacy_benchmarks/tree/master/OtherAlgorithms/numOccurrences)__
     * This benchmark receives a set of integers and computes the frequency that a specific test value occurs in the set.
     * __Threat Model:__ We protect the privacy of both the test value, as well as all elements in the input set using encryption.
 
