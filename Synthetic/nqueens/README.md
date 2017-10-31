@@ -53,4 +53,4 @@ _ _ Q _     _ Q _ _
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/nqueens.png)
+![alt text](../../graphs/nqueens.png)

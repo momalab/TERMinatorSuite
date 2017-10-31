@@ -44,12 +44,12 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
 
-- __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
+- __[N-Queens](https://github.com/momalab/privacy_benchmarks/tree/master/Synthetic/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
     * The 8-queens puzzle is the problem of placing eight chess queens on an 8×8 chessboard so that no two queens threaten each other. Thus, a solution requires that no two queens share the same row, column, or diagonal. The N-Queens problem is the problem of placing N queens on an NxN chessboard.
     * __Threat Model:__ In this benchmark, the final solution needs to remain private, so all queen positions and intermediate values are encrypted. The only input is the number of the queens, which is defined as an open value.
 
 
-- __[Tak function](https://github.com/momalab/privacy_benchmarks/tree/master/tak_function)__ [(link)](http://www.users.miamioh.edu/ishiut/papers/tarai_ipl.pdf)
+- __[Tak function](https://github.com/momalab/privacy_benchmarks/tree/master/Synthetic/tak_function)__ [(link)](http://www.users.miamioh.edu/ishiut/papers/tarai_ipl.pdf)
     * The Tak function is a synthetic benchmark, often used to demonstrate recursion performance (named after Ikuo Takeuchi). It uses variables x, y and z as inputs, and unless x <= y, each invocation spawns three recursive calls, where each variable is reduced by one.
     * __Threat Model:__ Variables x, y and z are encrypted to preserve their privacy.
 

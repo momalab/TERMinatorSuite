@@ -74,4 +74,4 @@ int main(void) {
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/tak.png)
+![alt text](../../graphs/tak.png)
