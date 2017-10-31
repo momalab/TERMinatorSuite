@@ -79,13 +79,13 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * This is not a different benchmark, as it is based in the Data Deduplication benchmark. In order to compute the union of two sets, one should first concatenate the two sets, and then apply the Deduplication algorithm in order to remove duplicate objects.
 
 
-- __[Fibonacci](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci)__ [(link)](http://mathworld.wolfram.com/FibonacciNumber.html)
+- __[Fibonacci](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/fibonacci)__ [(link)](http://mathworld.wolfram.com/FibonacciNumber.html)
     * The Fibonacci numbers form an integer sequence, where the first two integers (`F[1]` and `F[2]`)in the sequence are equal to `1`, and every other integer equals the sum of the two previous integers in the sequence: `F[n] = F[n-1] + F[n-2]`.
     * __Threat Model:__ The input integer `x` is encrypted to protect its privacy. This benchmark protects the input against information leakage from side channels.
     * This benchamark can compute up to a maximum input `N`. When the user input is `x`, for 0 <= x <= N, the program computes the corresponding Fibonacci output for every input in range [0, N] and obliviously selects `F[x]`. This is necessary to protect input `x` from side channel leakage, as the computation time of the algorithm is proportional to the user input `x`.
 
 
-- __[Factorial](https://github.com/momalab/privacy_benchmarks/tree/master/factorial)__ [(link)](http://mathworld.wolfram.com/Factorial.html)
+- __[Factorial](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/factorial)__ [(link)](http://mathworld.wolfram.com/Factorial.html)
     * The factorial `n!` of a positive integer `n` is the product of all positive integers less than or equal to `n`. We also define `0!=1`.
     * __Threat Model:__ Similar to Fibonacci, the input integer `n` is encrypted to protect its privacy. This benchmark also protects against side channels.
     
@@ -122,7 +122,7 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ The size of the array is unencrypted, while all the array elements and the output are encrypted.
 
 
-- __[Private Information Retrieval](https://github.com/momalab/privacy_benchmarks/tree/master/PIR)__ [(link)](https://en.wikipedia.org/wiki/Private_information_retrieval)
+- __[Private Information Retrieval](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/PIR)__ [(link)](https://en.wikipedia.org/wiki/Private_information_retrieval)
     * Private Information Retrieval (PIR) is a classic example of applications which require private computation. In the simplest scenario, the user maintains an encrypted database on an untrusted server. At some point, the user desires to retrieve some data from the database, without revealing any information about the inquiry itself, data stored in the database or the result of the inquiry.
     * As a simple example, the database can be visualized as a table of key-value pair entries, e.g. {1:6, 2:7, 3:8, 4:9, 5:0, 6:1}. An inquiry to the database is a particular key and the expected output is the corresponding value. So, in this example, when the key 3 is requested the output returned to the user should be 8. As mentioned before, both the key input and the return result are encrypted. Therefore, PIR entails a brute-force search through all encrypted entries, secretly comparing database keys with the encrypted input, eventually returning the encrypted value when the keys match.
     * __Threat Model:__ The size of the encrypted database is unencrypted, while the input, the keys and the values are all encrypted.

@@ -20,9 +20,9 @@ The algorithm computes the Fibonacci sequence up to a given maximum number (`max
 
 CEAL Example
 ------------
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/fibonacci_s.sca):
-Computes the Fibonacci of the number based on the input given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/fibonacci/input.sec) (in this case the output is `12`).
+[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/fibonacci/fibonacci_s.sca):
+Computes the Fibonacci of the number based on the input given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/fibonacci/input.sec) (in this case the output is `12`).
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/fibonacci.png)
+![alt text](../../graphs/fibonacci.png)

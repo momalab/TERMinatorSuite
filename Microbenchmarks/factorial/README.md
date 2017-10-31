@@ -17,10 +17,10 @@ The algorithm computes the factorial up to a maximum number `max_num`, by iterat
 
 CEAL Example
 ------------
-[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/factorial_s.sca):
-Computes the factorial of the input number `n` given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/factorial/input.sec) (in this case the input is 5).
+[Encrypted Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/factorial/factorial_s.sca):
+Computes the factorial of the input number `n` given in [input.sec](https://github.com/momalab/privacy_benchmarks/tree/master/Microbenchmarks/factorial/input.sec) (in this case the input is 5).
 
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/factorial.png)
+![alt text](../../graphs/factorial.png)
