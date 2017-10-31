@@ -32,13 +32,13 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
 
 **All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).** 
 
-- __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SpeckCipher)__ [(link)](https://en.wikipedia.org/wiki/Speck_(cipher))
+- __[Speck (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SpeckCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
     * Speck is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Speck has been optimized for performance in software implementations, while its sister algorithm, Simon, has been optimized for hardware implementations. Speck is an add-rotate-xor (ARX) cipher.
     * Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
 
-- __[Simon (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SimonCipher)__ [(link)](https://en.wikipedia.org/wiki/Simon_(cipher))
+- __[Simon (cipher)](https://github.com/momalab/privacy_benchmarks/tree/master/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
     * Simon is a family of lightweight block ciphers publicly released by the National Security Agency (NSA) in June 2013 ([Cryptology ePrint Archive](https://eprint.iacr.org/2013/404.pdf)). Simon has been optimized for performance in hardware implementations, while its sister algorithm, Speck, has been optimized for software implementations. Simon is an add-rotate-xor (ARX) cipher.
     * Simon uses a lot of bitwise operations (rotate-and-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/bitwiseOperators) that TERMinator Suite provides.
     * __Threat Model:__ The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
@@ -54,7 +54,7 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ Variables x, y and z are encrypted to preserve their privacy.
 
 
-- __[Insertion-sort](https://github.com/momalab/privacy_benchmarks/tree/master/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
+- __[Insertion-sort](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
     * The insertion sort algorithm enables in-place sorting of an input array, by left-shifting each array element to its correct (sorted) position. The algorithm iterates over all array elements and compares the j-th element with its previous one; if the higher-index element is larger, the algorithm swaps the two elements. 
     * Performance:
         - Worst-case: О(n^2)
@@ -63,12 +63,12 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ In this benchmark, all elements of the input array are encrypted to protect their privacy. The size of the array is not encrypted.
 
 
-- __[Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/master/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
+- __[Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/maste/Kernels/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
     * Private set intersection allows two parties, holding sets A and B respectively, to compute all elements common to both A and B, without revealing any information about the non-common elements in the sets.
     * __Threat Model:__ In this benchmark, all input and output set elements are encrypted to preserve their privacy. The size of sets A and B is not encrypted. If one set is smaller, it is extended with copies of a null ciphertext (`epsilon`).
 
 
-- __[Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
+- __[Data Deduplication Algorithm](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
     * Data deduplication is a specialized data compression technique for eliminating duplicate copies of data.
     * __Threat Model:__ In this benchmark, all input and output array elements are encrypted to preserve their privacy. The size of input array is not encrypted. If the output array set is smaller (after removing same elements), it is extended with copies of a null ciphertext (`epsilon`).
 
@@ -90,22 +90,22 @@ Step 2: ```cd``` to the benchmark you want to run (e.g., ```cd ./factorial```) a
     * __Threat Model:__ Similar to Fibonacci, the input integer `n` is encrypted to protect its privacy. This benchmark also protects against side channels.
     
 
-- __[Matrix Multiplication](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication)__ [(link)](http://mathworld.wolfram.com/MatrixMultiplication.html)
+- __[Matrix Multiplication](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/matrixMultiplication)__ [(link)](http://mathworld.wolfram.com/MatrixMultiplication.html)
     * Matrix multiplication computes a new matrix that is the product of two input matrices A and B. If A is an ```n × m``` matrix and B is an ```m × p``` matrix, the product matrix C=AB is an ```n × p``` matrix, where `m` entries across a row of A are multiplied with the `m` entries down a column of B and accumulated to an element of C.
     * __Threat Model:__ In this benchmark, the contents of both input matrices, as well as the contents of the product matrix, are encrypted. The dimensions (```n m``` and ```m p```) are not encrypted.
 
 
-- __[Permutations](https://github.com/momalab/privacy_benchmarks/tree/master/permutations)__ [(link)](http://mathworld.wolfram.com/Permutation.html)
+- __[Permutations](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/permutations)__ [(link)](http://mathworld.wolfram.com/Permutation.html)
     * This benchamark computes all possible permutations of the input set. A permutation is new potential arrangement in the order of a set. The total number of permutations in a set of `n` elements is the factorial `n!`.
     * __Threat Model:__ In this benchmark, we use encryption to protect the privacy of all elements in the input set, as well as all output sets (permutations). The cardinality of the input set is not protected.
 
 
-- __[Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes)__ [(link)](http://mathworld.wolfram.com/SieveofEratosthenes.html)
+- __[Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/sieveOfEratosthenes)__ [(link)](http://mathworld.wolfram.com/SieveofEratosthenes.html)
     * This benchmark implements an algorithm for finding all prime numbers less than a maximum value. The benchmark iterates over all integers and marks as `composite` (i.e., not prime) all multiples of each prime, starting with the multiples of 2 (the first prime). This benchmark prints all prime numbers up to the input integer `n`.
     * __Threat Model:__ In this benchmark, we protect the privacy of all computed primes using encryption. In addition, this benchmark protects the cardinality of the output set, by also returning the encryption of zero for composites. The input integer `n` that determines the maximum prime is not encrypted.
 
 
-- __[Prime Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/prime_numbers)__ [(link)](http://mathworld.wolfram.com/PrimeNumber.html)
+- __[Prime Numbers](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/prime_numbers)__ [(link)](http://mathworld.wolfram.com/PrimeNumber.html)
     * This benchmark uses the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes) algorithm to run indefinitely and generate each prime number in sequence.
     * __Threat Model:__  Similar to the Sieve of Eratosthenes, we protect the privacy of all computed primes. 
 

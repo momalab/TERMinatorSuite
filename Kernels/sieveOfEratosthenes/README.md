@@ -9,4 +9,4 @@ This benchmark prints all prime numbers less than a maximum integer using the Si
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/primes.png)
+![alt text](../../graphs/primes.png)

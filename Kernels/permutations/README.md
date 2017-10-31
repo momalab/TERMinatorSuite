@@ -14,4 +14,4 @@ This benchmark computes and prints all permutations of a given array/set.
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/perm.png)
+![alt text](../../graphs/perm.png)

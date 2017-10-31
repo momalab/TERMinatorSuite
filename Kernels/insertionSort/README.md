@@ -42,4 +42,4 @@ int gfun(int x, int y) {
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/isort.png)
+![alt text](../../graphs/isort.png)

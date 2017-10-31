@@ -1,7 +1,7 @@
 ### Array Deduplication Algorithm
 Given an input array, the algorithm removes all duplicates; for example, for input ```1 1 1 2 3 3 4 5 5 6```, the result is  ```1 ε ε 2 3 ε 4 5 ε 6```.
 
-**Open values:** The size of the input array (defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/deduplication/header.opn)). 
+**Open values:** The size of the input array (defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/deduplication/header.opn)). 
 
 **Encrypted Values:** All array elements.
 
@@ -11,4 +11,4 @@ Given an input array, the algorithm removes all duplicates; for example, for inp
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/deduplication.png)
+![alt text](../../graphs/deduplication.png)

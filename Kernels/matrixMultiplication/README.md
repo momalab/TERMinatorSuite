@@ -20,7 +20,7 @@ AxB=
 78 70 63 50
 ```
 
-**Open values:** The matrix dimensions (i.e., ```row1 col1 row2 col2```, which is defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/matrixMultiplication/header.opn)).
+**Open values:** The matrix dimensions (i.e., ```row1 col1 row2 col2```, which is defined in [header.opn](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/matrixMultiplication/header.opn)).
 
 **Encrypted Values:** The contents of both input matrices, and the output matrix.
 
@@ -30,4 +30,4 @@ AxB=
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/mmult.png)
+![alt text](../../graphs/mmult.png)

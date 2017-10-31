@@ -1,5 +1,5 @@
 ### Endless Prime Number Sequence
-This algorithm uses the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/sieveOfEratosthenes/) iteratively to compute the sequence of prime number idefinitely. Unlike the Sieve of Eratosthenes algorithm that has a maximum limit, this algorithm runs in an infinite loop.
+This algorithm uses the [Sieve of Eratosthenes](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/sieveOfEratosthenes/) iteratively to compute the sequence of prime number idefinitely. Unlike the Sieve of Eratosthenes algorithm that has a maximum limit, this algorithm runs in an infinite loop.
 
 ```
 void sieveOfEratosthenes(int *prime, int base) {
@@ -22,4 +22,4 @@ void sieveOfEratosthenes(int *prime, int base) {
 
 CEAL Benchmark Evaluation
 -------------------------
-![alt text](./../graphs/primes.png)
+![alt text](../../graphs/primes.png)
