@@ -1,7 +1,7 @@
-### Permutations
+### Private Set Permutations
 This benchmark computes and prints all permutations of a given array/set.
 
-**Unencrypted value:** The size of the input array is not encrypted..
+**Unencrypted value:** The size of the input array is not encrypted.
 
 **Encrypted values:** All elements in the input array and in all permuted output arrays are encrypted.
 
@@ -15,3 +15,5 @@ This benchmark computes and prints all permutations of a given array/set.
 CEAL Benchmark Evaluation
 -------------------------
 ![alt text](../../graphs/perm.png)
+
+**NOTE**: Encrypted and unencrypted time measurements are the same for the Set Permutations benchmark, since it does not use neither the secure multiplication (`smul`), nor the branching oracle (function `G`), nor the sequre equality (`seq`) operations.
