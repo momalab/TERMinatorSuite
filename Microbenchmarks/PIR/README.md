@@ -12,3 +12,6 @@ The odd positions in the encrypted database (db.sec) are the keys, while the eve
 
 **The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.opn` denotes an unencrypted input file, while `.sec` denotes an encrypted input file.**
 
+CEAL Benchmark Evaluation
+-------------------------
+![alt text](../../graphs/pir.png)
