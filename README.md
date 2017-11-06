@@ -29,14 +29,14 @@ Security and privacy are fundamental objectives characterizing contemporary clou
 
 1. __[Simon (cipher)](https://github.com/momalab/TERMinatorSuite/blob/master/Realistic/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
 
-1. __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/TERMinatorSuite/blob/master/Realistic/jenkinsHash)__ [(link)](https://en.wikipedia.org/wiki/Jenkins_hash_function)
+1. __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/TERMinatorSuite/blob/master/Realistic/jenkinsHash)__ [(link)](http://www.burtleburtle.net/bob/hash/doobs.html)
 
     #### Kernels Category
 1. __[Insertion-sort](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
 
 1. __[Private Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/maste/Kernels/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
 
-1. __[Data Deduplication Algorithm](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/deduplication)__ [(link)](https://en.wikipedia.org/wiki/Data_deduplication)
+1. __[Data Deduplication Algorithm](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/deduplication)__ [(link)](https://dl.acm.org/citation.cfm?id=1456471)
 
 1. __[Permutations](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/permutations)__ [(link)](http://mathworld.wolfram.com/Permutation.html)
 
@@ -45,7 +45,7 @@ Security and privacy are fundamental objectives characterizing contemporary clou
 1. __[Matrix Multiplication](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/matrixMultiplication)__ [(link)](http://mathworld.wolfram.com/MatrixMultiplication.html)
 
     #### Microbenchmarks Category
-1. __[Private Information Retrieval](https://github.com/momalab/TERMinatorSuite/blob/master/Microbenchmarks/PIR)__ [(link)](https://en.wikipedia.org/wiki/Private_information_retrieval) 
+1. __[Private Information Retrieval](https://github.com/momalab/TERMinatorSuite/blob/master/Microbenchmarks/PIR)__ [(link)](https://crysp.uwaterloo.ca/courses/pet/F09/cache/www.dbis.informatik.hu-berlin.de/fileadmin/research/papers/conferences/2001-gi_ocg-asonov.pdf) 
 
 1. __[Factorial](https://github.com/momalab/TERMinatorSuite/blob/master/Microbenchmarks/factorial)__ [(link)](http://mathworld.wolfram.com/Factorial.html)
 
