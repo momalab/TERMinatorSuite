@@ -1,0 +1,353 @@
+####################################
+## Jenkins Hash
+##########################################################################
+## Input:   const uint8_t* key, size_t length
+## Output:  uint32_t hash
+##########################################################################
+
+.pragma k=5 r=17 beta=32
+.pragma PQ=4281167959.4271299633
+.pragma io=ts incdir=../lib/
+
+.mov21 header_ptr length
+
+jenkins_loop:
+    .mov21 ptr temp             # temp = key[i];
+    .inc ptr                    # i++;
+    .inc jen_i
+    .add temp hash              # hash += temp;
+    ################ Shift Left 10 bits Start #################
+    .mov _o0 j
+    .mov hash temp              # temp = hash
+    sl_10_loop_exp:             # for (j = 0; j < i; j++)
+        .add temp temp     #   sl_hash *= 2;
+        .inc j
+    .ifneq j _o10 sl_10_loop_exp
+    ################ Shift Left 10 bits END #################
+
+    ################ AND with 0xFFFF Start #################
+    .mov temp x
+    .mov oxffff y
+    .mov _o0 i
+    .mov _o0 x_and_y
+    for_all_bits:
+        ## Compute LSB(x)
+        ._od2 x x_half  # x_half = x / 2
+        .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+        x_half lsb_x;
+        x_half lsb_x;
+        ## Compute LSB(y)
+        ._od2 y y_half  # y_half = y / 2
+        .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+        y_half lsb_y;
+        y_half lsb_y;
+        ## Compute LSB(x) AND LSB(y)
+        .omul lsb_x lsb_y lsb
+        .mov i tmp
+        .mov _o0 j
+        .mov lsb exp_result             # exp_result = lsb
+        _o0 tmp end_exp_loop;
+        exp_loop:                       # for (j = 0; j < i; j++)
+            .add exp_result exp_result
+            .add _o1 j
+        .ifneq j i exp_loop
+        end_exp_loop:
+        .add exp_result x_and_y
+        ## Continue with next bits
+        .mov x_half x
+        .mov y_half y
+        .add _o1 i      # i++
+    .ifneq i word_size for_all_bits
+    .mov x_and_y temp
+    ################ AND with 0xFFFF End #################
+
+    .add temp hash              # hash += temp;
+
+
+    ################# Shift Right 6 bits Start #################
+    .mov _o0 j
+    .mov hash temp              # temp = hash
+    sr_6_loop_exp:              # for (j = 0; j < i; j++)
+        ._od2 temp tmp         #   temp /= 2;
+        .mov tmp temp
+        .inc j
+    .ifneq j _o6 sr_6_loop_exp
+    ################# Shift Right 6 bits END #################
+    
+    .mov hash x
+    .mov temp y
+
+    ######################### hash XOR temp, XOR START #########################
+    .mov _o0 i
+    .mov _o0 x_xor_y
+    for_all_bits2:
+        ## Compute LSB(x)
+        ._od2 x x_half  # x_half = x / 2
+        .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+        x_half lsb_x;
+        x_half lsb_x;
+        ## Compute LSB(y)
+        ._od2 y y_half  # y_half = y / 2
+        .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+        y_half lsb_y;
+        y_half lsb_y;
+        ## Compute LSB(x) XOR LSB(y)
+        .mov lsb_x lsbx_or_lsby     # lsbx_or_lsby = lsb_x + lsb_y
+        .add lsb_y lsbx_or_lsby
+        .omul lsb_x lsb_y lsbx_and_lsby # lsbx_and_lsby = lsb_x * lsb_y
+        .mov _o1 lsbx_and_lsby_inv
+        lsbx_and_lsby lsbx_and_lsby_inv;        # lsbx_and_lsby_inv = (1 - (lsb_x * lsb_y)
+        .omul lsbx_or_lsby lsbx_and_lsby_inv lsb    # lsb = (lsb_x + lsb_y) * (1 - (lsb_x * lsb_y));
+        .mov i tmp
+        .mov _o0 j
+        .mov lsb exp_result             # exp_result = lsb
+        _o0 tmp end_exp_loop2;
+        exp_loop2:                       # for (j = 0; j < i; j++)
+            .add exp_result exp_result #     exp_result *= 2;
+            .add _o1 j
+        .ifneq j i exp_loop2
+        end_exp_loop2:
+        .add exp_result x_xor_y
+        ## Continue with next bits
+        .mov x_half x
+        .mov y_half y
+        .add _o1 i      # i++
+    .ifneq i word_size for_all_bits2
+    ######################### XOR END #########################
+    .mov x_xor_y hash
+    .out hash
+.ifneq jen_i length jenkins_loop
+
+
+################ Shift Left 3 bits Start #################
+.mov _o0 j
+.mov hash temp              # temp = hash
+sl_3_loop_exp:             # for (j = 0; j < i; j++)
+    .add temp temp     #   sl_hash *= 2;
+    .inc j
+.ifneq j _o3 sl_3_loop_exp
+################ Shift Left 3 bits END #################
+
+.add temp hash              # hash += temp;
+
+
+################# Shift Right 11 bits Start #################
+.mov _o0 j
+.mov hash temp              # temp = hash
+sr_11_loop_exp:              # for (j = 0; j < i; j++)
+    ._od2 temp tmp
+    .mov tmp temp         #   temp /= 2;
+    .inc j
+.ifneq j _o11 sr_11_loop_exp
+################# Shift Right 11 bits END #################
+
+.mov hash x
+.mov temp y
+######################### hash XOR temp, XOR START #########################
+.mov _o0 i
+.mov _o0 x_xor_y
+for_all_bits3:
+    ## Compute LSB(x)
+    ._od2 x x_half  # x_half = x / 2
+    .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+    x_half lsb_x;
+    x_half lsb_x;
+    ## Compute LSB(y)
+    ._od2 y y_half  # y_half = y / 2
+    .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+    y_half lsb_y;
+    y_half lsb_y;
+    ## Compute LSB(x) XOR LSB(y)
+    .mov lsb_x lsbx_or_lsby     # lsbx_or_lsby = lsb_x + lsb_y
+    .add lsb_y lsbx_or_lsby
+    .omul lsb_x lsb_y lsbx_and_lsby # lsbx_and_lsby = lsb_x * lsb_y
+    .mov _o1 lsbx_and_lsby_inv
+    lsbx_and_lsby lsbx_and_lsby_inv;        # lsbx_and_lsby_inv = (1 - (lsb_x * lsb_y)
+    .omul lsbx_or_lsby lsbx_and_lsby_inv lsb    # lsb = (lsb_x + lsb_y) * (1 - (lsb_x * lsb_y));
+    .mov i tmp
+    .mov _o0 j
+    .mov lsb exp_result             # exp_result = lsb
+    _o0 tmp end_exp_loop3;
+    exp_loop3:                       # for (j = 0; j < i; j++)
+        .add exp_result exp_result #     exp_result *= 2;
+        .add _o1 j
+    .ifneq j i exp_loop3
+    end_exp_loop3:
+    .add exp_result x_xor_y
+    ## Continue with next bits
+    .mov x_half x
+    .mov y_half y
+    .add _o1 i      # i++
+.ifneq i word_size for_all_bits3
+######################### XOR END #########################
+.mov x_xor_y hash
+
+# Keep only 16 bits
+################ AND with 0xFFFF Start #################
+.clear x
+.clear y
+.mov hash x
+.mov oxffff y
+.mov _o0 i
+.mov _o0 x_and_y
+for_all_bits4:
+    ## Compute LSB(x)
+    ._od2 x x_half  # x_half = x / 2
+    .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+    x_half lsb_x;
+    x_half lsb_x;
+    ## Compute LSB(y)
+    ._od2 y y_half  # y_half = y / 2
+    .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+    y_half lsb_y;
+    y_half lsb_y;
+    ## Compute LSB(x) AND LSB(y)
+    .omul lsb_x lsb_y lsb
+    .mov i tmp
+    .mov _o0 j
+    .mov lsb exp_result             # exp_result = lsb
+    _o0 tmp end_exp_loop4;
+    exp_loop4:                       # for (j = 0; j < i; j++)
+        .add exp_result exp_result
+        .add _o1 j
+    .ifneq j i exp_loop4
+    end_exp_loop4:
+    .add exp_result x_and_y
+    ## Continue with next bits
+    .mov x_half x
+    .mov y_half y
+    .add _o1 i      # i++
+.ifneq i word_size for_all_bits4
+.mov x_and_y hash
+################ AND with 0xFFFF End #################
+
+################ Shift Left 15 bits Start #################
+.mov _o0 j
+.mov hash temp              # temp = hash
+sl_15_loop_exp:             # for (j = 0; j < i; j++)
+    .add temp temp          #   temp *= 2;
+    .inc j
+.ifneq j _o15 sl_15_loop_exp
+################ Shift Left 15 bits END #################
+
+# Keep only 16 bits
+################ AND with 0xFFFF Start #################
+.clear x
+.clear y
+.mov temp x
+.mov oxffff y
+.mov _o0 i
+.mov _o0 x_and_y
+for_all_bits5:
+    ## Compute LSB(x)
+    ._od2 x x_half  # x_half = x / 2
+    .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+    x_half lsb_x;
+    x_half lsb_x;
+    ## Compute LSB(y)
+    ._od2 y y_half  # y_half = y / 2
+    .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+    y_half lsb_y;
+    y_half lsb_y;
+    ## Compute LSB(x) AND LSB(y)
+    .omul lsb_x lsb_y lsb
+    .mov i tmp
+    .mov _o0 j
+    .mov lsb exp_result             # exp_result = lsb
+    _o0 tmp end_exp_loop5;
+    exp_loop5:                       # for (j = 0; j < i; j++)
+        .add exp_result exp_result
+        .add _o1 j
+    .ifneq j i exp_loop5
+    end_exp_loop5:
+    .add exp_result x_and_y
+    ## Continue with next bits
+    .mov x_half x
+    .mov y_half y
+    .add _o1 i      # i++
+.ifneq i word_size for_all_bits5
+.mov x_and_y temp
+################ AND with 0xFFFF End #################
+
+.add temp hash              # hash += temp;
+
+# Keep only 16 bits
+################ AND with 0xFFFF Start #################
+.mov hash x
+.mov oxffff y
+.mov _o0 i
+.mov _o0 x_and_y
+for_all_bits6:
+    ## Compute LSB(x)
+    ._od2 x x_half  # x_half = x / 2
+    .mov x lsb_x    # lsb_x = x - (x_half + x_half)
+    x_half lsb_x;
+    x_half lsb_x;
+    ## Compute LSB(y)
+    ._od2 y y_half  # y_half = y / 2
+    .mov y lsb_y    # lsb_y = y - (y_half + y_half)
+    y_half lsb_y;
+    y_half lsb_y;
+    ## Compute LSB(x) AND LSB(y)
+    .omul lsb_x lsb_y lsb
+    .mov i tmp
+    .mov _o0 j
+    .mov lsb exp_result             # exp_result = lsb
+    _o0 tmp end_exp_loop6;
+    exp_loop6:                       # for (j = 0; j < i; j++)
+        .add exp_result exp_result
+        .add _o1 j
+    .ifneq j i exp_loop6
+    end_exp_loop6:
+    .add exp_result x_and_y
+    ## Continue with next bits
+    .mov x_half x
+    .mov y_half y
+    .add _o1 i      # i++
+.ifneq i word_size for_all_bits6
+.mov x_and_y hash
+################ AND with 0xFFFF End #################
+
+.out hash
+
+.halt
+
+
+
+## Variables
+. x:0 y:0
+. hash:0 temp:0
+. word_size:32
+. length:4
+. i:0 j:0 jen_i:0
+. sl_hash:0
+
+## variables used by XOR
+. x_half:0 y_half:0 lsb_x:0 lsb_y:0 lsb:0 x_xor_y:0 x_and_y:0
+. lsbx_and_lsby:0 lsbx_or_lsby:0 lsbx_and_lsby_inv:0
+. tmp:0 exp:0 exp_result:1
+
+## Constants
+. _o0:0 _o2:2 _o3:3 _o6:6 _o10:10 _o11:11 _o15:15
+. oxffff:65535
+
+. ptr:db_start
+. header_ptr:header_start
+
+
+# data
+header_start:
+.include "header.opn"
+header_end:
+header_size: (header_end - header_start)
+
+db_start:
+.include "abcd.opn"
+db_end:
+db_size: (db_end - db_start)
+
+.include "secure.lib"
+
+
+# Input: 01100001 01100010 01100011 01100100 (ab, cd)
+# Output: 59878
