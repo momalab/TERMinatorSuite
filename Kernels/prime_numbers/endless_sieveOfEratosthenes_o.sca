@@ -1,0 +1,118 @@
+####################################
+## Sieve Of Eratosthenes
+##########################################################################
+## result: 2 3 5 7 11 13 17 19 ...
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=4281167959.4271299633
+.pragma PQ=18299379327617480707.18345258783657292909
+.pragma PQ=338871469111127928412308213206819656391.338531414912581056934822037249894061881
+.pragma PQ=115689526107095890311249333520175779978137070980169508677335528535095435701957.115509443392406915656501893779637949187966713758992043305916442498716409678501
+.pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
+.pragma io=ts incdir=../lib/
+
+
+sieve_round:
+    # re-initialize the array
+    .mov _o0 i
+    .mov p_ptr_bu primeOuter
+    init_loop:
+        .add _o0 _o1
+        .mov12 _o1 primeOuter
+        .inc primeOuter
+        .inc i
+    .ifneq i N_succ init_loop
+
+    .mov _o2 p
+    .mov p_ptr_bu primeOuter
+    .add p primeOuter
+    outer_loop:
+        .mov p i
+        .add p i
+        inc_i_loop:
+        .mov base tmp
+        i tmp inner_loop;
+            .add p i
+        .goto inc_i_loop
+        inner_loop:                         # Update all multiples of p
+            .mov p_ptr_bu primeInner        # prime[i] = 0;
+            .add i primeInner
+            base primeInner;
+            .add _o0 _o0
+            .mov12 _o0 primeInner
+            .add p i
+        .mov i j
+        .mov N tmp2
+        .add _o1 tmp2
+        .add base tmp2
+        tmp2 j inner_loop;                  # if (j < N_succ) goto inner_loop;
+        .inc primeOuter
+        .inc p
+        .omul p p psqr
+        .mov N tmp2
+        .add _o1 tmp2
+        .add base tmp2
+    tmp2 psqr outer_loop                    # if (psqr < N_succ) goto outer_loop;
+
+    # Print all primes from 2 to N
+    .mov _o0 pr_s
+    .mov _o0 i
+    .mov p_ptr_bu primeOuter
+    print_loop:                         # for (i = 0 ; i < n ; i++)
+        .mov21 primeOuter x             #   print prime[i] * i  // this is either 0 or prime
+        .mov pr_s pr_o2
+        .add base_enc pr_o2
+        .omul pr_o2 x tmp                
+        .out tmp
+        .inc primeOuter
+        .add _o1 pr_s
+        .inc i
+    .ifneq i N print_loop
+
+    .add N base
+    .add N_enc base_enc
+    .mov base tmp
+MAX_N tmp sieve_round
+
+
+.halt
+
+# variables
+. primeOuter:prime
+. primeInner:prime
+. p_ptr_bu:prime
+
+#. N_succ:63 N:64 N_enc:64
+. N_succ:127 N:128 N_enc:128
+. MAX_N:255
+. base:0 base_enc:0
+
+. i:0 j:0 psqr:0 p:0
+. tmp:0 tmp2:0 pr_s:0 pr_o2:0
+. x:0 t:0
+
+. _o0:0 _o2:2
+
+
+.include "secure.lib"
+
+# This array should be at least N+2
+. prime:[2056]
+
+
+# void sieveOfEratosthenes(int *prime, int base) {
+#     for (int i = 0 ; i < N+1 ; i++) 
+#         prime[i] = 1;
+#     for (int p = 2 ; p*p < N+1 + base ; p++) {
+#         int i = 2*p;
+#         while (i < base) i += p;
+#         for ( ; i < N+1 + base ; i += p) {   // Update all multiples of p
+#             prime[i - base] = 0;
+#         }
+#     }
+#     for (int p = 0 ; p < N ; p++)              // Print all prime numbers
+#         printf("%d ", (p+base) * prime[p]);
+#     printf("\n");
+# }
