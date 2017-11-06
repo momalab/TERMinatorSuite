@@ -1,0 +1,42 @@
+# PIR example
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+.pragma io=ts incdir=../lib/
+
+.mov _o0 sum
+
+start:
+    .mov21  p key
+    .inc    p
+    .mov21  p val
+    .inc    p
+    .dec    db_size
+    .dec    db_size
+    .mov _o0 x                      # x = 0
+    .ifneq key input skip           # if i == num:
+        .mov _o1 x                  #   x = 1
+    skip:
+    .omul   x val y
+    .add    y sum
+.ifneq  db_size _o0 start
+
+.out    sum
+
+.halt
+
+. sum:0 key:0 val:0 p:db_start x:0 y:0
+
+# data
+db_start:
+.include "db.opn"
+db_end:
+
+input:7
+
+db_size: (db_end - db_start)
+
+# constants
+. _o0:0
+
+.include "secure.lib"
