@@ -1,0 +1,273 @@
+####################################
+## Tak Function, using stack to simulate recursion
+##########################################################################
+## Var iter is used for max iterations depending the depth of recursion,
+## to avoid branch on encrypted values
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+.pragma PQ=239.251
+# .pragma PQ=63199.64567
+# .pragma PQ=4281167959.4271299633
+# .pragma PQ=18299379327617480707.18345258783657292909
+# .pragma PQ=338871469111127928412308213206819656391.338531414912581056934822037249894061881
+# .pragma PQ=115689526107095890311249333520175779978137070980169508677335528535095435701957.115509443392406915656501893779637949187966713758992043305916442498716409678501
+# .pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
+.pragma io=ts incdir=../lib/
+
+
+.mov _o0 i                                                      #    int i = 0;
+.mov _o0 i_enc                                                  #    int i_enc = 0;
+do_while_i:                                                     #    do {
+    .mov _o0 j                                                  #        int j = 0;
+    .mov _o0 j_enc                                              #        int j_enc = 0;
+    do_while_j:                                                 #        do {
+        .mov _o0 k                                              #            int k = 0;
+        .mov _o0 k_enc                                          #            int k_enc = 0;
+        do_while_k:                                             #            do {
+                                                                ################ Tak Function ################
+            .mov i_enc x                                        #                int x = i_enc;
+            .mov j_enc y                                        #                int y = j_enc;
+            .mov k_enc z                                        #                int z = k_enc
+            .mov ITERATIONS iter                                #                int iter = ITERATIONS;
+            tak_function:                                       #                tak_function: {
+                .mov x tmp
+                .sub y tmp                                      #                    tmp = x-y
+                # ._G tmp _o1 sel                                 #                    sel = gfun(x-y, ~1);     // sel = x > y;
+               .mov _o0 sel
+                _o0 tmp label1
+                    .mov _o1 sel
+                label1:
+                while_iter:                                     #                    while_iter:
+                    .ifeq iter _o0 end_while_iter               #                    if (!iter) goto end_while_iter;
+                        .dec iter                               #                        iter--;
+                        .mov _o1 onem_sel
+                        .sub sel onem_sel                       #                        int onem_sel = 1 - sel;
+                        .omul onem_sel oldx tmp
+                        .omul sel x tmp2    
+                        .mov tmp oldx
+                        .add tmp2 oldx                          #                        int oldx = onem_sel * oldx + sel * x;
+                        .omul onem_sel oldy tmp
+                        .omul sel y tmp2    
+                        .mov tmp oldy
+                        .add tmp2 oldy                          #                        int oldy = onem_sel * oldy + sel * y;
+
+                                                                #######                  // stack, recurse and unstack vars
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov12 oldx stack                       #                        stack[stack_ptr] = oldx;
+                        .inc stack
+                        .mov12 oldy stack                       #                        stack[stack_ptr + 1] = oldy;
+                        .inc stack
+                        .mov12 x stack                          #                        stack[stack_ptr + 2] = x;
+                        .inc stack 
+                        .mov12 y stack                          #                        stack[stack_ptr + 3] = y;
+                        .inc stack
+                        .mov12 z stack                          #                        stack[stack_ptr + 4] = z;
+                        .inc stack
+                        .mov12 sel stack                        #                        stack[stack_ptr + 5] = sel;
+                        .inc stack
+                        .mov12 iter stack                       #                        stack[stack_ptr + 6] = iter;
+                        .inc stack
+                        .mov12 _o1 stack                        #                        stack[stack_ptr + 7] = 1;
+                        .add _o8 stack_ptr                      #                        stack_ptr += 8;
+                        .sub _o1 x                                  #                        x--;
+                        .goto tak_function                      #########                goto tak_function; // x = tak(x - 1, y, z);
+                        tak_ret_1:
+                        .mov z ret_val                          #                        ret_val = z; // z is the returned result from tak
+                        .sub _o7 stack_ptr                      #                        stack_ptr -= 7;
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov21 stack oldx                       #                        oldx = stack[stack_ptr];
+                        .inc stack
+                        .mov21 stack oldy                       #                        oldy = stack[stack_ptr + 1];
+                        .inc stack
+                        .mov21 stack x                          #                        x = stack[stack_ptr + 2];
+                        .inc stack
+                        .mov21 stack y                          #                        y = stack[stack_ptr + 3];
+                        .inc stack
+                        .mov21 stack z                          #                        z = stack[stack_ptr + 4];
+                        .inc stack
+                        .mov21 stack sel                        #                        sel = stack[stack_ptr + 5];
+                        .inc stack
+                        .mov21 stack iter                       #                        iter = stack[stack_ptr + 6];
+                        .mov _o1 onem_sel
+                        .sub sel onem_sel                       #                        int onem_sel = 1 - sel;
+                        .omul onem_sel x tmp
+                        .omul sel ret_val tmp2    
+                        .mov tmp x
+                        .add tmp2 x                             #                        x =  onem_sel * x + sel * ret_val;
+
+                                                                #######                  // stack, recurse and unstack vars
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov12 oldx stack                       #                        stack[stack_ptr] = oldx;
+                        .inc stack
+                        .mov12 oldy stack                       #                        stack[stack_ptr + 1] = oldy;
+                        .inc stack
+                        .mov12 x stack                          #                        stack[stack_ptr + 2] = x;
+                        .inc stack 
+                        .mov12 y stack                          #                        stack[stack_ptr + 3] = y;
+                        .inc stack
+                        .mov12 z stack                          #                        stack[stack_ptr + 4] = z;
+                        .inc stack
+                        .mov12 sel stack                        #                        stack[stack_ptr + 5] = sel;
+                        .inc stack
+                        .mov12 iter stack                       #                        stack[stack_ptr + 6] = iter;
+                        .inc stack
+                        .mov12 _o2 stack                        #                        stack[stack_ptr + 7] = 2;
+                        .add _o8 stack_ptr                      #                        stack_ptr += 8;
+                        .mov y x
+                        .sub _o1 x                                  #                        x = y-1;
+                        .mov z y                                #                        y = z;
+                        .mov oldx z                             #                        z = oldx;
+                        .goto tak_function                      #########                goto tak_function; //  y = tak(y - 1, z, oldx);
+                        tak_ret_2:
+                        .mov z ret_val                          #                        ret_val = z; // z is the returned result from tak
+                        .sub _o7 stack_ptr                      #                        stack_ptr -= 7;
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov21 stack oldx                       #                        oldx = stack[stack_ptr];
+                        .inc stack
+                        .mov21 stack oldy                       #                        oldy = stack[stack_ptr + 1];
+                        .inc stack
+                        .mov21 stack x                          #                        x = stack[stack_ptr + 2];
+                        .inc stack
+                        .mov21 stack y                          #                        y = stack[stack_ptr + 3];
+                        .inc stack
+                        .mov21 stack z                          #                        z = stack[stack_ptr + 4];
+                        .inc stack
+                        .mov21 stack sel                        #                        sel = stack[stack_ptr + 5];
+                        .inc stack
+                        .mov21 stack iter                       #                        iter = stack[stack_ptr + 6];
+                        .mov _o1 onem_sel
+                        .sub sel onem_sel                       #                        int onem_sel = 1 - sel;
+                        .omul onem_sel y tmp
+                        .omul sel ret_val tmp2    
+                        .mov tmp y
+                        .add tmp2 y                             #                        y = onem_sel * y + sel * ret_val;
+
+                        .mov x tmp
+                        .sub y tmp                              #                        tmp = x-y;
+                        # ._G tmp _o1 sel                         #                        sel = gfun(x-y, ~1);     // sel = x > y;
+                        .mov _o0 sel
+                        _o0 tmp label2
+                            .mov _o1 sel
+                        label2:
+
+                                                                #######                  // stack, recurse and unstack vars
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov12 oldx stack                       #                        stack[stack_ptr] = oldx;
+                        .inc stack
+                        .mov12 oldy stack                       #                        stack[stack_ptr + 1] = oldy;
+                        .inc stack
+                        .mov12 x stack                          #                        stack[stack_ptr + 2] = x;
+                        .inc stack 
+                        .mov12 y stack                          #                        stack[stack_ptr + 3] = y;
+                        .inc stack
+                        .mov12 z stack                          #                        stack[stack_ptr + 4] = z;
+                        .inc stack
+                        .mov12 sel stack                        #                        stack[stack_ptr + 5] = sel;
+                        .inc stack
+                        .mov12 iter stack                       #                        stack[stack_ptr + 6] = iter;
+                        .inc stack
+                        .mov12 _o3 stack                        #                        stack[stack_ptr + 7] = 3;
+                        .add _o8 stack_ptr                      #                        stack_ptr += 8;                                        
+                        .mov z x
+                        .sub _o1 x                                  #                        x = z-1;
+                        .mov oldx y                             #                        y = oldx;
+                        .mov oldy z                             #                        z = oldy;
+                        .goto tak_function                      #########                goto tak_function; //  y = tak(y - 1, z, oldx);
+                        tak_ret_3:
+                        .mov z ret_val                          #                        ret_val = z; // z is the returned result from tak
+                        .sub _o7 stack_ptr                      #                        stack_ptr -= 7;
+                        .mov stack_bu stack
+                        .add stack_ptr stack
+                        .mov21 stack oldx                       #                        oldx = stack[stack_ptr];
+                        .inc stack
+                        .mov21 stack oldy                       #                        oldy = stack[stack_ptr + 1];
+                        .inc stack
+                        .mov21 stack x                          #                        x = stack[stack_ptr + 2];
+                        .inc stack
+                        .mov21 stack y                          #                        y = stack[stack_ptr + 3];
+                        .inc stack
+                        .mov21 stack z                          #                        z = stack[stack_ptr + 4];
+                        .inc stack
+                        .mov21 stack sel                        #                        sel = stack[stack_ptr + 5];
+                        .inc stack
+                        .mov21 stack iter                       #                        iter = stack[stack_ptr + 6];
+                        .mov _o1 onem_sel
+                        .sub sel onem_sel                       #                        int onem_sel = 1 - sel;
+                        .omul onem_sel z tmp
+                        .omul sel ret_val tmp2    
+                        .mov tmp z
+                        .add tmp2 z                             #                        z = onem_sel * z + sel * ret_val;
+
+                    .goto while_iter;                       #                        goto while_iter;
+                end_while_iter:
+                                                            #                    /* find the "return pointer" */
+                .mov _o0 ret_pos                            #                    ret_pos = 0;
+                .ifeq stack_ptr _o0 ret_pos_zero            #                    if (stack_ptr == 0) goto ret_pos_zero;
+                    .mov stack_bu stack
+                    .dec stack_ptr                          #                        stack_ptr--;
+                    .add stack_ptr stack                    
+                    .mov21 stack ret_pos                    #                        ret_pos = stack[stack_ptr];
+                ret_pos_zero:                               #                    ret_pos_zero:
+                .ifeq ret_pos _o1 tak_ret_1                 #                    if (ret_pos == 1) goto tak_ret_1;
+                .ifeq ret_pos _o2 tak_ret_2                 #                    if (ret_pos == 2) goto tak_ret_2;
+                .ifeq ret_pos _o3 tak_ret_3                 #                    if (ret_pos == 3) goto tak_ret_3;
+                .out z                                     #                    // printf("%d\n", z);
+                                                            #                }
+                                                            ################ End of Tak function ################
+            .inc k                                          #                k++;
+            .add _o1 k_enc                                  #                k_enc++;
+            .mov k tmp
+        MAX_NUM tmp do_while_k                              #            if (k - MAX_NUM <= 0) goto do_while_j; // } while (k <= MAX_NUM);
+        .inc j                                              #            j++;
+        .add _o1 j_enc                                      #            j_enc++;
+        .mov j tmp
+    MAX_NUM tmp do_while_j                                  #        if (j - MAX_NUM <= 0) goto do_while_j; // } while (j <= MAX_NUM);
+.inc i                                                  #        i++;
+.add _o1 i_enc                                          #        i_enc++;
+.mov i tmp
+MAX_NUM tmp do_while_i                                  #    if (i - MAX_NUM <= 0) goto do_while_i; // } while (i <= MAX_NUM);
+
+.halt
+
+
+# array pointers
+. stack:stack_area stack_bu:stack_area
+. stack_ptr:0
+
+# tak input variables x, y, z : [0, MAX_NUM]
+. MAX_NUM:5
+. ITERATIONS:4
+
+# . MAX_NUM:4
+# . ITERATIONS:3
+
+# . MAX_NUM:5
+# . ITERATIONS:4
+
+# encrypted variables
+. x:0 y:0 z:0 oldx:0 oldy:0
+. i_enc:0 j_enc:0 k_enc:0
+. sel:0 onem_sel:0 ret_val:0
+
+# open variables
+. i:0 j:0 k:0
+. iter:0
+. ret_pos:0
+
+# temporary variables
+. tmp:0 tmp2:0
+
+# constants
+. _o0:0 _o2:2 _o3:3 _o7:7 _o8:8
+
+
+.include "secure.lib"
+
+. stack_area:[256]

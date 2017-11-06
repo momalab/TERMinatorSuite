@@ -1,0 +1,234 @@
+####################################
+## N-Queens Permutations
+##########################################################################
+## 
+##########################################################################
+
+
+.pragma k=5 r=17 beta=8
+# .pragma k=5 r=17 beta=16
+.pragma PQ=239.251
+# .pragma PQ=63199.64567
+# .pragma PQ=4281167959.4271299633
+# .pragma PQ=18299379327617480707.18345258783657292909
+# .pragma PQ=338871469111127928412308213206819656391.338531414912581056934822037249894061881
+# .pragma PQ=115689526107095890311249333520175779978137070980169508677335528535095435701957.115509443392406915656501893779637949187966713758992043305916442498716409678501
+# .pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
+
+.pragma io=ts incdir=../lib/
+
+# Initialize the array, place each queen in different row and in the first position of the row
+.mov _o0 i 
+init_array_for_i:
+    .mov _o0 j 
+    init_array_for_j:
+        .ifneq j _o0 skip_init
+            .mov12 _o1 array
+        skip_init:
+        .inc array
+        .inc j
+    .ifneq j board_size init_array_for_j
+    .inc i
+.ifneq i board_size init_array_for_i
+.mov array_bu array
+
+# Generate permutations and check if is a valid solution
+permute_rows_rec:
+    .ifneq depth board_size depth_lt_rows       #     if (depth != BOARD_SIZE) goto depth_lt_rows;
+        # Check if Columns safe
+        .mov _o1 safe                           #         int safe = 1;
+        .mov _o0 j                              #         j = 0;
+        check_cols_for_j:                       #         do {
+            .mov _o0 cols_sum                   #             int cols_sum = 0;
+            .mov _o0 i                          #             i = 0;
+            .mov array_bu array
+            .add j array                        #             array = array_bu + j;
+            check_cols_for_i:                   #             do {
+                .mov21 array tmp 
+                .add tmp cols_sum               #                 cols_sum += *array;
+                .add board_size array           #                 array += BOARD_SIZE;
+                .inc i                          #                 i++;
+            .ifneq i board_size check_cols_for_i #            } while (i != BOARD_SIZE);
+            .omul safe cols_sum safe            #             safe = safe * cols_sum;
+            .inc j                              #             j++
+        .ifneq j board_size check_cols_for_j    #         } while (j != BOARD_SIZE);
+        # ._G safe _s1 cols_safe                  #         int cols_safe = gfun(safe, 1);
+        .mov _o0 cols_safe
+        _o0 safe label1
+            .mov _o1 cols_safe
+        label1:
+        .mov array_bu array                     #         array = array_bu;
+
+        # Check if Diagonals safe
+        .mov _o0 not_safe_p                     #         int not_safe_p = 0;
+        .mov _o0 not_safe_s                     #         int not_safe_s = 0;
+        .mov _o0 k                              #         k = 0;
+        check_diags_for_k:                      #         do {
+            .mov _o0 p_sum                      #             int p_sum = 0; // primary diagonals sum
+            .mov _o0 s_sum                      #             int s_sum = 0; // secondary diagonals sum
+            .mov _o0 j                          #             j = 0;
+            check_diags_for_j:                  #             do {
+                .mov k i
+                .sub j i                        #                 int i = k - j;
+                .mov board_size_pred jj 
+                .sub j jj                       #                 int jj = BOARD_SIZE-1 - j; // secondary
+                .mov board_size tmp
+                i tmp i_or_j_gt_boardsize       #                 if (BOARD_SIZE - i <= 0) goto i_or_j_gt_boardsize
+                .mov board_size tmp
+                j tmp i_or_j_gt_boardsize       #                 if (BOARD_SIZE - j <= 0) goto i_or_j_gt_boardsize
+                    .omul i board_size array 
+                    .add array_bu array         #                     array = array_bu + i*BOARD_SIZE;
+                    .add jj array
+                    .mov21 array tmp            #                     tmp = array[jj]
+                    .add tmp s_sum              #                     s_sum += tmp;
+                    .sub jj array
+                    .add j array
+                    .mov21 array tmp            #                     tmp = array[j]
+                    .add tmp p_sum              #                     p_sum += tmp;
+                i_or_j_gt_boardsize:            #                 }
+                .inc j                          #                 j++;
+                .mov k k_suc
+                .add _o1 k_suc
+            .ifneq j k_suc check_diags_for_j     #             } while (j != k+1);
+            .sub _o1 p_sum
+            
+            # ._G p_sum _o1 tmp            
+            .mov _o0 tmp
+            _o0 p_sum label2
+                .mov _o1 tmp
+            label2:
+
+            .add tmp not_safe_p                 #             not_safe_p += gfun(p_sum-1, 1);
+            .sub _o1 s_sum
+            # ._G s_sum _o1 tmp
+            .mov _o0 tmp
+            _o0 s_sum label3
+                .mov _o1 tmp
+            label3:
+            .add tmp not_safe_s                 #             not_safe_s += gfun(s_sum-1, 1);
+            .inc k                              #             k++;
+        .ifneq k brd_sz_double check_diags_for_k #        } while (k != BOARD_SIZE * 2);
+        .mov _o1 not_safe_p_rev
+        .sub not_safe_p not_safe_p_rev
+      
+        # ._G not_safe_p_rev _o1 x                #         int x = gfun(1-not_safe_p, 1);
+        .mov _o0 x
+        _o0 not_safe_p_rev label4
+            .mov _o1 x
+        label4:
+
+        .mov _o1 not_safe_s_rev
+        .sub not_safe_s not_safe_s_rev
+        # ._G not_safe_s_rev _o1 y                #         int y = gfun(1-not_safe_s, 1);
+        .mov _o0 y
+        _o0 not_safe_s_rev label5
+            .mov _o1 y
+        label5:
+
+        .omul x y diags_safe                    #         int diags_safe = x && y;
+        .mov array_bu array                     #         array = array_bu;
+        # Combine cols and diags to check if whole board is a solution
+        .omul cols_safe diags_safe is_sol      #         int is_sol = cols_safe * diags_safe;
+        .add is_sol sol_cnt                    #         sol_cnt += is_sol;
+        # Encode solutions
+        .omul enc_key is_sol tmp
+        .add tmp enc_key                        #         enc_key += enc_key * is_sol; // if sol, double the enc-key value
+        .mov _o0 i                              #         i = 0;
+        encode_sol_for_i:                       #         do {
+            .mov _o0 j                          #             j = 0;
+            encode_sol_for_j:                   #             do {
+                .mov21 array x
+                .omul enc_key x x
+                .omul x is_sol tmp
+                .add12 tmp all_sols             #                 *all_sols += (enc_key * *array) * is_sol;
+                .inc all_sols                   #                 all_sols++;
+                .inc array                      #                 array++;
+                .inc j                          #                 j++
+            .ifneq j board_size encode_sol_for_j #            } while (j != BOARD_SIZE);
+            .inc i                              #             i++
+        .ifneq i board_size encode_sol_for_i    #         } while (i != BOARD_SIZE);
+        .mov all_sols_bu all_sols               #         all_sols = all_sols_bu;
+        .mov array_bu array                     #         array = array_bu;
+        .goto permute_rows_rec_return           #         goto permute_rows_rec_return;
+    depth_lt_rows:
+        .mov _o0 i                              #     i = 0;
+        permute_cols_loop:                      #     for (int i = 0; i < BOARD_SIZE; i++)
+            # Stack variables
+            .inc depth                          #         depth++;
+            .add stack_ptr stack                #         stack += stack_ptr;
+            .mov12 depth stack                  #         *stack = depth;
+            .inc stack                          #         stack++;
+            .mov12 i stack                      #         *stack = i;
+            .mov stack_bu stack                 #         stack = stack_bu;
+            .add _o2 stack_ptr                  #         stack_ptr += 2;
+            .goto permute_rows_rec;             #         permuteRows(array, depth+1);
+        permute_rows_rec_return:
+            # Unstack variables
+            .sub _o2 stack_ptr                  #         stack_ptr -= 2;
+            .add stack_ptr stack                #         stack += stack_ptr;
+            .mov21 stack depth                  #         depth = *stack - 1;
+            .dec depth
+            .inc stack                          #         stack++;
+            .mov21 stack i                      #         i = *stack;
+            .mov stack_bu stack                 #         stack = stack_bu;
+            # Swap 1-0 to 0-1
+            .omul depth board_size depth_x_size #         int depth_times_size = depth*BOARD_SIZE;
+            .add depth_x_size array    
+            .add i array                        #         array += depth_times_size + i;
+            .omul _o0 _o1 _o0 # change encryption of zero 
+            .mov12 _o0 array                    #         *array = 0;
+            .inc array                          #         array++;
+            .ifneq i board_size_pred last_position #      if (i != BOARD_SIZE-1) goto last_position;
+                .sub board_size array           #             array -= BOARD_SIZE;
+            last_position:
+            .add _o0 _o1 # change encryption of one
+            .mov12 _o1 array                    #         *array = 1;
+            .mov array_bu array                 #         array = array_bu;
+            .inc i                              #         i++;
+        .ifneq i board_size permute_cols_loop   #     if (i != BOARD_SIZE) goto permute_cols_loop;
+    .ifneq stack_ptr _o0 permute_rows_rec_return # if (stack_ptr != 0) goto permute_rows_rec_return;
+
+# Print encoded results
+.mov _o0 i                              # i = 0
+print_loop_i:                           # do {
+    .mov _o0 j                          #     j = 0
+    print_loop_j:                       #     do {
+        .mov21 all_sols tmp
+        .out tmp                       #         print all_sols[i][j]  
+        .inc all_sols
+        .inc j                          #         j++;
+    .ifneq j board_size print_loop_j    #     } while (j != BOARD_SIZE);
+    .inc i                              #     i++;
+.ifneq i board_size print_loop_i        # } while (i != BOARD_SIZE);
+
+
+.halt
+
+
+# array pointers
+. array:queens_array array_bu:queens_array
+. all_sols:all_sols_array all_sols_bu:all_sols_array
+. stack:stack_area stack_bu:stack_area stack_ptr:0
+
+# variables
+. sol_cnt:0 enc_key:1 is_sol:0
+. depth:0 depth_x_size:0
+. safe:0 diags_safe:0 cols_safe:0 cols_sum:0
+. not_safe_p:0 not_safe_s:0
+. not_safe_p_rev:0 not_safe_s_rev:0
+. p_sum:0 s_sum:0
+. i:0 j:0 jj:0 k:0 k_suc:0
+. x:0 y:0 tmp:0
+. _o0:0 _o2:2
+
+. board_size:4 board_size_pred:3 brd_sz_double:8
+# . board_size:6 board_size_pred:5 brd_sz_double:12
+
+
+.include "secure.lib"
+
+. queens_array:[50]
+
+. all_sols_array:[50]
+
+. stack_area:[256]
