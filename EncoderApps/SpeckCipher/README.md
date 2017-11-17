@@ -29,9 +29,9 @@ Ciphertext: a868 42f2
 
 **Encrypted Values:** The key, the plaintext, and the ciphertext remain encrypted throughout the whole execution.
 
-Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/bitwiseOperators) that TERMinator Suite provides.
+Speck uses a lot of bitwise operations (rotate-xor), which are not natively supported in encrypted computation architectures, like Cryptoleq. There is no actual access to the bits, since all data are encrypted. Thus, we use the [simulated bitwise operations](https://github.com/momalab/privacy_benchmarks/tree/master/EncoderApps/bitwiseOperators) that TERMinator Suite provides.
 
-(Key Scheduler) : The [speck_expand.c](https://github.com/momalab/privacy_benchmarks/tree/master/Realistic/SpeckCipher/speck_expand.c) program is used to generate the round_key[ROUNDS] from the key[KEY_LEN].
+(Key Scheduler) : The [speck_expand.c](https://github.com/momalab/privacy_benchmarks/tree/master/EncoderApps/SpeckCipher/speck_expand.c) program is used to generate the round_key[ROUNDS] from the key[KEY_LEN].
 
 **The source code of this benchmark is available both in `C` as well as `CEAL` (`.sca`) format. In CEAL, `_o.sca` denotes a program without privacy protections, while `_s.sca` denotes a privacy-preserving program. Moreover, `.opn` denotes an unencrypted input file, while `.sec` denotes an encrypted input file.**
 
