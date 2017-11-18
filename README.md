@@ -5,7 +5,7 @@ Security and privacy are fundamental objectives characterizing contemporary clou
 
 
 ### TERMinator Suite Benchmark Categories
-* __Encoder Applications__: This class comprises three real-life cryptographic and hash applications (namely `Speck`, `Simon` and `Jenkins`), which are demanding in terms of bitwise operations and branch decisions on encrypted values, and allow assessing the BRO of the target abstract machine.
+* __Encoder Benchmarks__: This class comprises three real-life cryptographic and hash applications (namely `Speck`, `Simon` and `Jenkins`), which are demanding in terms of bitwise operations and branch decisions on encrypted values, and allow assessing the BRO of the target abstract machine.
 
 * __Synthetic__: In this class we have the `NQueens` and `Tak` algorithms, which evaluate the universality of the underlying abstract machine using recursion, in addition to making branch decisions on encrypted control values (a critical functionality for encrypted computation).
 
@@ -24,12 +24,12 @@ Security and privacy are fundamental objectives characterizing contemporary clou
 
 1. __[Tak function](https://github.com/momalab/TERMinatorSuite/blob/master/Synthetic/tak_function)__ [(link)](http://www.users.miamioh.edu/ishiut/papers/tarai_ipl.pdf)
 
-    #### Encoder Applications Category
-1. __[Speck (cipher)](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderApps/SpeckCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
+    #### Encoder Benchmarks Category
+1. __[Speck (cipher)](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderBenchmarks/SpeckCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
 
-1. __[Simon (cipher)](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderApps/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
+1. __[Simon (cipher)](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderBenchmarks/SimonCipher)__ [(link)](https://eprint.iacr.org/2013/404.pdf)
 
-1. __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderApps/jenkinsHash)__ [(link)](http://www.burtleburtle.net/bob/hash/doobs.html)
+1. __[Jenkins one-at-a-time Hash Function](https://github.com/momalab/TERMinatorSuite/blob/master/EncoderBenchmarks/jenkinsHash)__ [(link)](http://www.burtleburtle.net/bob/hash/doobs.html)
 
     #### Kernels Category
 1. __[Insertion-sort](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
