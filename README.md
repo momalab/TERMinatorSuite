@@ -34,7 +34,7 @@ Security and privacy are fundamental objectives characterizing contemporary clou
     #### Kernels Category
 1. __[Insertion-sort](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/insertionSort)__ [(link)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.45.8017&rep=rep1&type=pdf)
 
-1. __[Private Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/maste/Kernels/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
+1. __[Private Set Intersection](https://github.com/momalab/privacy_benchmarks/tree/master/Kernels/PSI)__ [(link)](https://www.cs.virginia.edu/~evans/pubs/ndss2012/psi.pdf)
 
 1. __[Data Deduplication Algorithm](https://github.com/momalab/TERMinatorSuite/blob/master/Kernels/deduplication)__ [(link)](https://dl.acm.org/citation.cfm?id=1456471)
 
@@ -79,4 +79,5 @@ It is possible to change the security parameter of a benchmark by updating the `
 .pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
 ```
 
+### Publication
 D. Mouris, N. G. Tsoutsos and M. Maniatakos, "TERMinator Suite: Benchmarking Privacy-Preserving Architectures." *IEEE Computer Architecture Letters*, Volume: 17, Issue: 2, July-December 2018. The publication describing the benchmarks can be accessed [here](https://ieeexplore.ieee.org/document/8307166) and author's version [here](https://jimouris.github.io/publications/mouris2018terminator.pdf).
