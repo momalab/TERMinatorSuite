@@ -1,7 +1,7 @@
 # TERMinator Suite
 ## Data-Oblivious Benchmarks for Encrypted Data Computation
 
-TERMinator suite offers benchmarks specifically tailored to encrypted computers, to enable comparisons across different architectures. Our benchmark suite, dubbed TERMinator, offers rich set of data-oblivious programs that can be ported as-is to the encrypted domain. The benchmarks are currently maintained by the [Modern Microprocessors Architecture Lab](https://nyuad.nyu.edu/momalab) at New York University Abu Dhabi as well as the Trustworthy Computing Group at University of Delaware.
+TERMinator suite offers benchmarks specifically tailored to encrypted computers, to enable comparisons across different architectures. Our benchmark suite, dubbed TERMinator, offers rich set of data-oblivious programs that can be ported as-is to the encrypted domain. The benchmarks are currently maintained by the [Modern Microprocessors Architecture Lab](https://nyuad.nyu.edu/momalab) at New York University Abu Dhabi as well as the [Trustworthy Computing Group](https://github.com/TrustworthyComputing) at University of Delaware.
 
 ## Cite us!
 
