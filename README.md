@@ -1,7 +1,17 @@
 # TERMinator Suite
-## Benchmarks for Privacy Preserving Architectures
+## Data-Oblivious Benchmarks for Encrypted Data Computation
 
-Security and privacy are fundamental objectives characterizing contemporary cloud computing. Despite the wide adoption of encryption for protecting data in transit and at rest, data in use remains unencrypted inside cloud processors and memories, as computation is not applicable on encrypted values. This limitation introduces security risks, as unencrypted values can be leaked through side-channels or hardware Trojans. To address this problem, encrypted architectures have recently been proposed, which leverage homomorphic encryption to natively process encrypted data using datapaths of thousands of bits. In this case, additional security protections are traded for higher performance penalties, which drives the need for more efficient architectures. In this work, we develop benchmarks specifically tailored to encrypted computers, to enable comparisons across different architectures. Our benchmark suite, dubbed TERMinator, is unique as it avoids `“termination problems”` that prohibit making control-flow decisions and evaluating early termination conditions based on encrypted data, as these can leak information. Contrary to generic suites that ignore the fundamental challenges of encrypted computation, our algorithms are tailored to the security primitives of the target encrypted architecture, such as the existence of branching oracles. In our experiments, we compiled our benchmarks for the Cryptoleq architecture and evaluated their performance for a range of security parameters.
+TERMinator suite offers benchmarks specifically tailored to encrypted computers, to enable comparisons across different architectures. Our benchmark suite, dubbed TERMinator, offers rich set of data-oblivious programs that can be ported as-is to the encrypted domain. The benchmarks are currently maintained by the [Modern Microprocessors Architecture Lab](https://nyuad.nyu.edu/momalab) at New York University Abu Dhabi as well as the Trustworthy Computing Group at University of Delaware.
+
+## Cite us!
+
+Please use the following publication to cite the benchmarks:
+ 
+    D. Mouris, N. G. Tsoutsos and M. Maniatakos,
+    "TERMinator Suite: Benchmarking Privacy-Preserving Architectures."
+    IEEE Computer Architecture Letters, Volume: 17, Issue: 2, July-December 2018. 
+
+The publication describing the benchmarks can be accessed [here](https://ieeexplore.ieee.org/document/8307166) and author's version [here](https://jimouris.github.io/publications/mouris2018terminator.pdf).
 
 
 ### TERMinator Suite Benchmark Categories
@@ -17,7 +27,7 @@ Security and privacy are fundamental objectives characterizing contemporary clou
 
 ### List of TERMinator Suite Benchmarks
 
-* __All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files). `CEAL` provides native support for a branching oracle (function G).__
+* __All benchmarks are available as `C/C++` sources (`.c` files), as well as `CEAL` sources (`.sca` files).__
 
     #### Synthetic Category
 1. __[N-Queens](https://github.com/momalab/TERMinatorSuite/blob/master/Synthetic/nqueens)__ [(link)](http://www.kotesovec.cz/rivin_1994.pdf)
@@ -78,6 +88,3 @@ It is possible to change the security parameter of a benchmark by updating the `
 .pragma PQ=115689526107095890311249333520175779978137070980169508677335528535095435701957.115509443392406915656501893779637949187966713758992043305916442498716409678501
 .pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
 ```
-
-### Publication
-D. Mouris, N. G. Tsoutsos and M. Maniatakos, "TERMinator Suite: Benchmarking Privacy-Preserving Architectures." *IEEE Computer Architecture Letters*, Volume: 17, Issue: 2, July-December 2018. The publication describing the benchmarks can be accessed [here](https://ieeexplore.ieee.org/document/8307166) and author's version [here](https://jimouris.github.io/publications/mouris2018terminator.pdf).
