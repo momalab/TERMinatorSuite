@@ -15,11 +15,11 @@ The publication describing the benchmarks can be accessed [here](https://ieeexpl
 
 
 ### TERMinator Suite Benchmark Categories
-* __Encoder Benchmarks__: This class comprises three real-life cryptographic and hash applications (namely `Speck`, `Simon` and `Jenkins`), which are demanding in terms of bitwise operations and branch decisions on encrypted values, and allow assessing the BRO of the target abstract machine.
+* __Encoder Benchmarks__: This class comprises three real-life cryptographic and hash applications (namely `Speck`, `Simon` and `Jenkins`), which are demanding in terms of bitwise operations.
 
-* __Synthetic__: In this class we have the `NQueens` and `Tak` algorithms, which evaluate the universality of the underlying abstract machine using recursion, in addition to making branch decisions on encrypted control values (a critical functionality for encrypted computation).
+* __Synthetic__: In this class we have the `NQueens` and `Tak` algorithms, which evaluate the universality of the underlying abstract machine using recursion.
 
-* __Kernels__: In this class we have the `Insertion Sort`, `Set Intersection`, `Deduplication (Union)`, `Matrix Multiplication`, `Primes (Sieve of Eratosthenes)`, and `Permutations`, which evaluate essential loops that combine memory swaps, branching oracle calls and arithmetic operations. These kernels also have significance in privacy-sensitive real-life applications: for example, set intersection is used to evaluate collision courses of military satellites without revealing actual paths, while permutations is an important part of DNA sequencing.
+* __Kernels__: In this class we have the `Insertion Sort`, `Set Intersection`, `Deduplication (Union)`, `Matrix Multiplication`, `Primes (Sieve of Eratosthenes)`, and `Permutations`, which evaluate essential loops that combine memory swaps and arithmetic operations. These kernels also have significance in privacy-sensitive real-life applications: for example, set intersection is used to evaluate collision courses of military satellites without revealing actual paths, while permutations is an important part of DNA sequencing.
 
 * __Microbenchmarks__: In this class we have the `Factorial`, `Fibonacci` and `Private Information Retrieval` algorithms, which evaluate a single critical homomorphic operation of addition and multiplication in the underlying abstract machine. 
 
