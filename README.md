@@ -1,4 +1,5 @@
-# TERMinator Suite
+# TERMinator Suite [![License MIT][badge-license]](LICENSE)
+
 ## Data-Oblivious Benchmarks for Encrypted Data Computation
 
 TERMinator suite offers benchmarks specifically tailored to encrypted computers, to enable comparisons across different architectures. Our benchmark suite, dubbed TERMinator, offers rich set of data-oblivious programs that can be ported as-is to the encrypted domain. The benchmarks are currently maintained by the [Modern Microprocessors Architecture Lab](https://nyuad.nyu.edu/momalab) at New York University Abu Dhabi as well as the [Trustworthy Computing Group](https://github.com/TrustworthyComputing) at University of Delaware.
@@ -88,3 +89,5 @@ It is possible to change the security parameter of a benchmark by updating the `
 .pragma PQ=115689526107095890311249333520175779978137070980169508677335528535095435701957.115509443392406915656501893779637949187966713758992043305916442498716409678501
 .pragma PQ=13392849694255970315601419090152597688339809774933571293865724091737666496951381207429127235940384883608845778583380210687006370486238723021460371010217257.13403952390292880134486926689236901739298695038033079040680862117777593853851234125818128702776151240584166261477766002390185782669746209391687589482784501
 ```
+
+[badge-license]: https://img.shields.io/badge/license-MIT-green.svg?style=flat-square
